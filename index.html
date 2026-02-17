@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mirin-Free Sushi Restaurants</title>
+
+<style>
+
+    /* Reset */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f6f9fc;
+        color: #333;
+        line-height: 1.6;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: auto;
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: #2c5f2d;
+    }
+
+    p {
+        margin-bottom: 15px;
+        font-size: 1rem;
+    }
+
+    a {
+        color: #1c6ed5;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .email {
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    /* Table Wrapper (for mobile scroll) */
+    .table-wrapper {
+        overflow-x: auto;
+        margin-top: 25px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 700px;
+    }
+
+    thead {
+        background-color: #d9f2d0;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #ccc;
+        font-size: 0.95rem;
+    }
+
+    th {
+        font-weight: bold;
+        color: #000;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tbody tr:hover {
+        background-color: #eef7ee;
+    }
+
+    .verified {
+        color: green;
+        font-weight: bold;
+    }
+
+    .pending {
+        color: orange;
+        font-weight: bold;
+    }
+
+    /* Mobile Tweaks */
+    @media (max-width: 600px) {
+
+        h1 {
+            font-size: 1.6rem;
+        }
+
+        p {
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            font-size: 0.85rem;
+            padding: 8px;
+        }
+    }
+
+/* Submission Form */
+
+.submit-form {
+    max-width: 700px;
+    margin: auto;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+}
+
+.submit-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.submit-form input,
+.submit-form select,
+.submit-form textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.95rem;
+}
+
+.submit-form input:focus,
+.submit-form select:focus,
+.submit-form textarea:focus {
+    outline: none;
+    border-color: #2c5f2d;
+}
+
+.submit-form button {
+    background: #2c5f2d;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.submit-form button:hover {
+    background: #3a7a3a;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Mirin-Free Sushi Restaurants</h1>
+
+    <p>
+        Finding alcohol-free sushi can be difficult because
+        <a href="https://www.usatoday.com/story/life/food-dining/2022/10/24/what-mirin-heres-what-know-and-substitutes-use-if-needed/10459181002/"
+           target="_blank"
+	   rel="noopener noreferrer">
+           Mirin
+        </a>
+        is a hidden ingredient in most sushi rice.
+        This platform identifies and verifies sushi restaurants that offer
+        <strong>mirin-free sushi rice</strong>, providing a safe and reliable
+        resource for those with religious or dietary needs.
+    </p>
+
+    <p class="email">
+        Have any comments or suggestions?  
+        Email us at:
+        <a href="mailto:admin@mirinfreesushi.com">admin@mirinfreesushi.com</a>
+    </p>
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Restaurant Name</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Uses Mirin</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>A-Aki Sushi & Steakhouse</td>
+                    <td>3680 Avalon Park E Blvd</td>
+                    <td>Orlando</td>
+                    <td>FL</td>
+                    <td>Yes</td>
+                    <td class="verified">Verified</td>
+                </tr>
+
+                <tr>
+                    <td>Banyan City Buffet</td>
+                    <td>5403 W Colonial Dr</td>
+                    <td>Orlando</td>
+                    <td>FL</td>
+                    <td>-</td>
+                    <td class="pending">Pending</td>
+                </tr>
+
+                <tr>
+                    <td>Bayridge Sushi</td>
+                    <td>400 Savage Ct</td>
+                    <td>Longwood</td>
+                    <td>FL</td>
+                    <td>Yes</td>
+                    <td class="verified">Verified</td>
+                </tr>
+
+                <tr>
+                    <td>Chow's Country Buffet</td>
+                    <td>3125 Columbia Blvd</td>
+                    <td>Titusville</td>
+                    <td>FL</td>
+                    <td>-</td>
+                    <td class="pending">Pending</td>
+                </tr>
+
+                <tr>
+                    <td>Divina Carne Steakhouse</td>
+                    <td>6424 Carrier Dr</td>
+                    <td>Orlando</td>
+                    <td>FL</td>
+                    <td>No</td>
+                    <td class="verified">Verified</td>
+                </tr>
+
+                <tr>
+                    <td>Joy Luck Buffet</td>
+                    <td>3813 S Nova Rd</td>
+                    <td>Port Orange</td>
+                    <td>FL</td>
+                    <td>No</td>
+                    <td class="verified">Verified</td>
+                </tr>
+
+                <tr>
+                    <td>Kingdom Sushi</td>
+                    <td>5632 International Dr</td>
+                    <td>Orlando</td>
+                    <td>FL</td>
+                    <td>No</td>
+                    <td class="verified">Verified</td>
+                </tr>
+
+                <tr>
+                    <td>Kizuna Asian Buffet</td>
+                    <td>12173 S Apopka Vineland Rd</td>
+                    <td>Orlando</td>
+                    <td>FL</td>
+                    <td>-</td>
+                    <td class="pending">Pending</td>
+                </tr>
+
+                <tr>
+                    <td>Oceans Buffet</td>
+                    <td>3109 E Colonial Dr</td>
+                    <td>Orlando</td>
+                    <td>FL</td>
+                    <td>Yes</td>
+                    <td class="verified">Verified</td>
+                </tr>
+
+                <tr>
+                    <td>Suki Hanna</td>
+                    <td>4060 Town Center Blvd</td>
+                    <td>Orlando</td>
+                    <td>FL</td>
+                    <td>Yes</td>
+                    <td class="verified">Verified</td>
+                </tr>
+
+                <tr>
+                    <td>Sushi 99</td>
+                    <td>1024 Avalon Park N Blvd</td>
+                    <td>Orlando</td>
+                    <td>FL</td>
+                    <td>No</td>
+                    <td class="verified">Verified</td>
+                </tr>
+
+                <tr>
+                    <td>Sushi Kaizen</td>
+                    <td>5320 W Irlo Bronson Hwy</td>
+                    <td>Kissimmee</td>
+                    <td>FL</td>
+                    <td>Yes</td>
+                    <td class="verified">Verified</td>
+                </tr>
+
+                <tr>
+                    <td>Sushi Yama</td>
+                    <td>6748 Grand National Dr</td>
+                    <td>Orlando</td>
+                    <td>FL</td>
+                    <td>Yes</td>
+                    <td class="verified">Verified</td>
+                </tr>
+
+                <tr>
+                    <td>Take a Sushi</td>
+                    <td>4725 W Sand Lake Rd</td>
+                    <td>Orlando</td>
+                    <td>FL</td>
+                    <td>Yes</td>
+                    <td class="verified">Verified</td>
+                </tr>
+
+                <tr>
+                    <td>UMA Sushi</td>
+                    <td>486 N Orange Ave</td>
+                    <td>Orlando</td>
+                    <td>FL</td>
+                    <td>No</td>
+                    <td class="verified">Verified</td>
+                </tr>
+
+                <tr>
+                    <td>Villa Sushi (Teppanyaki)</td>
+                    <td>10025 International Drive</td>
+                    <td>Orlando</td>
+                    <td>FL</td>
+                    <td>Yes</td>
+                    <td class="verified">Verified</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<hr style="margin:40px 0;">
+
+<h2 style="text-align:center;color:#2c5f2d;margin-bottom:20px;">
+Submit a New Restaurant
+</h2>
+
+<p style="text-align:center;margin-bottom:25px;">
+Know a sushi restaurant that offers mirin-free rice?  
+Help us grow the list!
+</p>
+
+<form action="https://formspree.io/f/xreakwen" method="POST" class="submit-form">
+
+    <!-- Success Redirect -->
+    <input type="hidden" name="_redirect" value="https://mirinfreesushi.com/thank-you.html">
+
+    <div class="form-grid">
+
+        <div>
+		<label for="restaurant">Restaurant Name *</label>
+		<input id="restaurant" type="text" name="Restaurant Name" required>
+        </div>
+
+        <div>
+            <label>Street Address *</label>
+            <input type="text" name="Address" required>
+        </div>
+
+        <div>
+            <label>City *</label>
+            <input type="text" name="City" required>
+        </div>
+
+        <div>
+            <label>State *</label>
+            <input type="text" name="State" required maxlength="2">
+        </div>
+
+        <div>
+            <label>Uses Mirin?</label>
+            <select name="Uses Mirin">
+                <option value="Unknown">Unknown</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Your Email (optional)</label>
+            <input type="email" name="Submitter Email">
+        </div>
+
+    </div>
+
+    <div style="margin-top:20px;">
+        <label>Additional Notes</label>
+        <textarea name="Notes" rows="4"></textarea>
+    </div>
+
+    <button type="submit">Submit Restaurant</button>
+
+</form>
+
+</body>
+</html>
