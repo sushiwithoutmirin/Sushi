@@ -585,7 +585,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 </script>
-	
+
+<script>
+/* Highlight rows where Uses Mirin = No */
+document.addEventListener("DOMContentLoaded", function () {
+
+    const rows = document.querySelectorAll("tbody tr");
+
+    rows.forEach(row => {
+
+        const mirinValue = row.cells[4].innerText.trim();
+
+        if (mirinValue === "No") {
+
+            row.style.fontWeight = "bold";
+            row.style.backgroundColor = "#f0fff0"; // light green (optional)
+
+        }
+
+    });
+
+});
+</script>
 
 </body>
 </html>
