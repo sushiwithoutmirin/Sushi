@@ -172,6 +172,57 @@
     background: #3a7a3a;
 }
 
+/* Filter Bar Styling */
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.filters label {
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.9rem;
+}
+
+.filters input,
+.filters select {
+    width: 150px;          /* Column width */
+    height: 38px;          /* Row height */
+    padding: 6px 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.filters button {
+    height: 38px;          /* Match input height */
+    padding: 0 18px;
+    font-size: 0.95rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.filters button:first-of-type {
+    background: #2c5f2d;
+    color: white;
+    border: none;
+}
+
+.filters button:last-of-type {
+    background: #999;
+    color: white;
+    border: none;
+}
+
+.filters button:hover {
+    opacity: 0.9;
+}
+
 </style>
 </head>
 
@@ -200,7 +251,7 @@
         <a href="mailto:sushiwithoutmirin@gmail.com">sushiwithoutmirin@gmail.com</a>
     </p>
 
-	<div class="filters" style="margin-top:25px; text-align:center;">
+	<div class="filters">
 
     <label>
         City:
