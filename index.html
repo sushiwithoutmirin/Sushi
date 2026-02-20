@@ -546,23 +546,24 @@ function filterTable() {
     const city = document.getElementById("filterCity").value.toLowerCase();
     const state = document.getElementById("filterState").value.toUpperCase();
     const mirin = document.getElementById("filterMirin").value;
-    const style = document.getElementById("filterStyle").value; // Added
+    const style = document.getElementById("filterStyle").value;
 
     const rows = document.querySelectorAll("tbody tr");
 
     rows.forEach(row => {
         const cityCell = row.cells[2].innerText.toLowerCase();
         const stateCell = row.cells[3].innerText.toUpperCase();
-        const mirinCell = row.cells[4].innerText.trim();
-        const styleCell = row.cells[6].innerText.trim(); // Dining Style is index 6
+        
+        // CORRECTED INDICES BELOW:
+        const styleCell = row.cells[4].innerText.trim(); // Was 6, now 4
+        const mirinCell = row.cells[5].innerText.trim(); // Was 4, now 5
 
         let show = true;
 
-        // Check each condition
         if (city && !cityCell.includes(city)) show = false;
         if (state && stateCell !== state) show = false;
         if (mirin && mirinCell !== mirin) show = false;
-        if (style && styleCell !== style) show = false; // Added
+        if (style && styleCell !== style) show = false;
 
         row.style.display = show ? "" : "none";
     });
