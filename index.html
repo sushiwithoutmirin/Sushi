@@ -90,8 +90,8 @@
         background-color: #f9f9f9;
     }
 
-    tbody tr:hover {
-        background-color: #eef7ee;
+    tbody tr:not(.mirin-no):not(.mirin-yes):hover {
+    background-color: #eef7ee;
     }
 
     .verified {
@@ -227,12 +227,12 @@
 }
 
 	.mirin-no {
-    background-color: #f0fff0;   /* light green */
+    background-color: #e8ffe8 !important;
     font-weight: bold;
 }
 
 .mirin-yes {
-    background-color: #ffe5e5;   /* light red */
+    background-color: #ffe0e0 !important;
     color: #b00000;
     font-weight: bold;
 }
@@ -405,7 +405,7 @@
                     <td>FL</td>
 					<td>All You Can Eat</td>
                     <td>No</td>
-                    <td class="verified">Verified</td><
+                    <td class="verified">Verified</td>
 					<td>Dec 17, 2025</td>
                 </tr>
                <tr>
@@ -415,7 +415,7 @@
                     <td>FL</td>
 					<td>All You Can Eat</td>
                     <td>No</td>
-                    <td class="verified">Verified</td><
+                    <td class="verified">Verified</td>
 					<td>Mar 4, 2026</td>
 			   </tr>
 
