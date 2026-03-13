@@ -34,171 +34,92 @@
     a:hover { text-decoration: underline; }
     .email { font-weight: bold; margin-top: 10px; }
 
-    /* ── Loading State ── */
+    /* ── Loading ── */
     #loadingMsg {
-        text-align: center;
-        padding: 30px;
-        font-size: 1.1rem;
-        color: #666;
+        text-align: center; padding: 30px;
+        font-size: 1.1rem; color: #666;
     }
-    #loadingMsg span {
-        display: inline-block;
-        animation: pulse 1.2s ease-in-out infinite;
-    }
+    #loadingMsg span { display: inline-block; animation: pulse 1.2s ease-in-out infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-    /* ── Filter Bar ── */
-    .filters {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 12px;
-        margin-top: 25px;
-    }
-    .filters label {
-        font-weight: bold;
-        display: flex;
-        flex-direction: column;
-        font-size: 0.9rem;
-    }
+    /* ── Filters ── */
+    .filters { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-top:25px; }
+    .filters label { font-weight:bold; display:flex; flex-direction:column; font-size:0.9rem; }
     .filters input, .filters select {
-        width: 150px;
-        height: 38px;
-        padding: 6px 10px;
-        font-size: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        margin-top: 3px;
+        width:150px; height:38px; padding:6px 10px;
+        font-size:1rem; border:1px solid #ccc; border-radius:6px; margin-top:3px;
     }
     .filters .clear-btn {
-        height: 38px;
-        padding: 0 18px;
-        font-size: 0.95rem;
-        border-radius: 6px;
-        cursor: pointer;
-        margin-top: 22px;
-        background: #999;
-        color: white;
-        border: none;
+        height:38px; padding:0 18px; font-size:0.95rem; border-radius:6px;
+        cursor:pointer; margin-top:22px; background:#999; color:white; border:none;
     }
-    .filters .clear-btn:hover { opacity: 0.9; }
+    .filters .clear-btn:hover { opacity:0.9; }
 
     /* ── Table ── */
-    .table-wrapper { overflow-x: auto; margin-top: 25px; }
-    table { width: 100%; border-collapse: collapse; min-width: 800px; }
-    thead { background-color: #d9f2d0; }
-    th, td { padding: 10px 12px; text-align: center; border: 1px solid #ccc; font-size: 0.93rem; }
-    th { font-weight: bold; color: #000; }
-    tbody tr:nth-child(even) { background-color: #f9f9f9; }
-    tbody tr:not(.mirin-no):not(.mirin-yes):hover { background-color: #eef7ee; }
+    .table-wrapper { overflow-x:auto; margin-top:25px; }
+    table { width:100%; border-collapse:collapse; min-width:800px; }
+    thead { background-color:#d9f2d0; }
+    th, td { padding:10px 12px; text-align:center; border:1px solid #ccc; font-size:0.93rem; }
+    th { font-weight:bold; color:#000; }
+    tbody tr:nth-child(even) { background-color:#f9f9f9; }
+    tbody tr:not(.mirin-no):not(.mirin-yes):hover { background-color:#eef7ee; }
 
-    .verified { color: green; font-weight: bold; }
-    .pending  { color: orange; font-weight: bold; }
+    .verified { color:green; font-weight:bold; }
+    .pending  { color:orange; font-weight:bold; }
+    .mirin-no  { background-color:#e8ffe8 !important; font-weight:bold; }
+    .mirin-yes { background-color:#ffe0e0 !important; color:#b00000; font-weight:bold; }
 
-    .mirin-no  { background-color: #e8ffe8 !important; font-weight: bold; }
-    .mirin-yes { background-color: #ffe0e0 !important; color: #b00000; font-weight: bold; }
+    /* ── Admin Column ── */
+    .action-col { display:none; }
+    table.admin-active .action-col { display:table-cell; }
 
-    /* ── Admin Action Column ── */
-    .action-col { display: none; }
-    table.admin-active .action-col { display: table-cell; }
-
-    .verify-btn {
-        background: #1c6ed5; color: white; border: none;
-        padding: 4px 9px; border-radius: 4px; cursor: pointer;
-        font-size: 0.78rem; white-space: nowrap; margin: 2px 1px;
-    }
-    .verify-btn:hover { background: #1558b0; }
-
-    .edit-btn {
-        background: #e67e00; color: white; border: none;
-        padding: 4px 9px; border-radius: 4px; cursor: pointer;
-        font-size: 0.78rem; white-space: nowrap; margin: 2px 1px;
-    }
-    .edit-btn:hover { background: #c46a00; }
-
-    .save-btn {
-        background: #2c5f2d; color: white; border: none;
-        padding: 4px 9px; border-radius: 4px; cursor: pointer;
-        font-size: 0.78rem; white-space: nowrap; margin: 2px 1px;
-    }
-    .save-btn:hover { background: #3a7a3a; }
-
-    .cancel-btn {
-        background: #888; color: white; border: none;
-        padding: 4px 9px; border-radius: 4px; cursor: pointer;
-        font-size: 0.78rem; white-space: nowrap; margin: 2px 1px;
-    }
-    .cancel-btn:hover { background: #666; }
+    .verify-btn { background:#1c6ed5; color:white; border:none; padding:4px 9px; border-radius:4px; cursor:pointer; font-size:0.78rem; white-space:nowrap; margin:2px 1px; }
+    .verify-btn:hover { background:#1558b0; }
+    .edit-btn   { background:#e67e00; color:white; border:none; padding:4px 9px; border-radius:4px; cursor:pointer; font-size:0.78rem; white-space:nowrap; margin:2px 1px; }
+    .edit-btn:hover { background:#c46a00; }
+    .save-btn   { background:#2c5f2d; color:white; border:none; padding:4px 9px; border-radius:4px; cursor:pointer; font-size:0.78rem; white-space:nowrap; margin:2px 1px; }
+    .save-btn:hover { background:#3a7a3a; }
+    .cancel-btn { background:#888; color:white; border:none; padding:4px 9px; border-radius:4px; cursor:pointer; font-size:0.78rem; white-space:nowrap; margin:2px 1px; }
+    .cancel-btn:hover { background:#666; }
 
     td input.cell-input, td select.cell-select {
-        width: 100%; padding: 3px 5px; border: 1px solid #666;
-        border-radius: 3px; font-size: 0.88rem;
-        background: #fff !important; color: #000 !important;
-        font-weight: normal !important;
+        width:100%; padding:3px 5px; border:1px solid #666; border-radius:3px;
+        font-size:0.88rem; background:#fff !important; color:#000 !important; font-weight:normal !important;
     }
 
     /* ── Admin Panel ── */
-    .admin-section { text-align: center; margin: 30px 0 10px; }
-    .admin-toggle-btn {
-        background: #555; color: white; border: none;
-        padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 0.9rem;
-    }
-    .admin-toggle-btn:hover { background: #333; }
-
+    .admin-section { text-align:center; margin:30px 0 10px; }
+    .admin-toggle-btn { background:#555; color:white; border:none; padding:8px 18px; border-radius:6px; cursor:pointer; font-size:0.9rem; }
+    .admin-toggle-btn:hover { background:#333; }
     #adminPanel {
-        display: none;
-        max-width: 400px;
-        margin: 10px auto;
-        background: #f0f0f0;
-        padding: 20px;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        text-align: center;
+        display:none; max-width:400px; margin:10px auto; background:#f0f0f0;
+        padding:20px; border-radius:8px; border:1px solid #ccc; text-align:center;
     }
-    #adminPanel input {
-        padding: 8px 12px; border: 1px solid #ccc; border-radius: 5px;
-        font-size: 1rem; margin-right: 8px; width: 160px;
-    }
-    #adminPanel button {
-        background: #2c5f2d; color: white; border: none;
-        padding: 8px 16px; border-radius: 5px; cursor: pointer; font-size: 1rem;
-    }
-    #adminPanel button:hover { background: #3a7a3a; }
-    #adminMsg { margin-top: 10px; font-weight: bold; }
+    #adminPanel input { padding:8px 12px; border:1px solid #ccc; border-radius:5px; font-size:1rem; margin-right:8px; width:160px; }
+    #adminPanel button { background:#2c5f2d; color:white; border:none; padding:8px 16px; border-radius:5px; cursor:pointer; font-size:1rem; }
+    #adminPanel button:hover { background:#3a7a3a; }
+    #adminMsg { margin-top:10px; font-weight:bold; }
 
-    /* ── Submission Form ── */
-    .submit-form { max-width: 700px; margin: auto; }
-    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
-    .submit-form label { display: block; font-weight: bold; margin-bottom: 5px; }
-    .submit-form input,
-    .submit-form select,
-    .submit-form textarea {
-        width: 100%; padding: 8px 10px; border: 1px solid #ccc;
-        border-radius: 5px; font-size: 0.95rem;
+    /* ── Submit Form ── */
+    .submit-form { max-width:700px; margin:auto; }
+    .form-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:15px; }
+    .submit-form label { display:block; font-weight:bold; margin-bottom:5px; }
+    .submit-form input, .submit-form select, .submit-form textarea {
+        width:100%; padding:8px 10px; border:1px solid #ccc; border-radius:5px; font-size:0.95rem;
     }
-    .submit-form input:focus,
-    .submit-form select:focus,
-    .submit-form textarea:focus { outline: none; border-color: #2c5f2d; }
-    .submit-form button {
-        background: #2c5f2d; color: white; border: none;
-        padding: 12px 25px; font-size: 1rem; border-radius: 6px;
-        cursor: pointer; margin-top: 20px;
-    }
-    .submit-form button:hover { background: #3a7a3a; }
+    .submit-form input:focus, .submit-form select:focus, .submit-form textarea:focus { outline:none; border-color:#2c5f2d; }
+    .submit-form button { background:#2c5f2d; color:white; border:none; padding:12px 25px; font-size:1rem; border-radius:6px; cursor:pointer; margin-top:20px; }
+    .submit-form button:hover { background:#3a7a3a; }
 
     /* ── Banners ── */
-    .banner {
-        display: none;
-        padding: 14px 20px; border-radius: 8px; text-align: center;
-        font-weight: bold; margin: 20px auto; max-width: 700px;
-    }
-    #submitBanner  { background:#d9f2d0; border:1px solid #2c5f2d; color:#2c5f2d; }
-    #errorBanner   { background:#ffe0e0; border:1px solid #b00000; color:#b00000; }
+    .banner { display:none; padding:14px 20px; border-radius:8px; text-align:center; font-weight:bold; margin:20px auto; max-width:700px; }
+    #submitBanner { background:#d9f2d0; border:1px solid #2c5f2d; color:#2c5f2d; }
+    #errorBanner  { background:#ffe0e0; border:1px solid #b00000; color:#b00000; }
 
-    @media (max-width: 600px) {
-        h1 { font-size: 1.6rem; }
-        p  { font-size: 0.95rem; }
-        th, td { font-size: 0.82rem; padding: 7px; }
+    @media (max-width:600px) {
+        h1 { font-size:1.6rem; }
+        p  { font-size:0.95rem; }
+        th, td { font-size:0.82rem; padding:7px; }
     }
 </style>
 </head>
@@ -220,17 +141,12 @@
 
     <p class="email">
         Have any comments or suggestions?
-        Email us at: <a href="/cdn-cgi/l/email-protection#631016100b0a140a170b0c16170e0a110a0d23040e020a0f4d000c0e"><span class="__cf_email__" data-cfemail="6b181e1803021c021f03041e1f06021902052b0c060a020745080406">[email&#160;protected]</span></a>
+        Email us at: <a href="mailto:sushiwithoutmirin@gmail.com">sushiwithoutmirin@gmail.com</a>
     </p>
 
-    <!-- ── Dynamic Filters ── -->
     <div class="filters">
-        <label>City:
-            <input type="text" id="filterCity" placeholder="Orlando" oninput="filterTable()">
-        </label>
-        <label>State:
-            <input type="text" id="filterState" placeholder="FL" maxlength="2" oninput="filterTable()">
-        </label>
+        <label>City: <input type="text" id="filterCity" placeholder="Orlando" oninput="filterTable()"></label>
+        <label>State: <input type="text" id="filterState" placeholder="FL" maxlength="2" oninput="filterTable()"></label>
         <label>Dining Style:
             <select id="filterStyle" onchange="filterTable()">
                 <option value="">All</option>
@@ -269,9 +185,9 @@
         </table>
     </div>
 
-</div><!-- /.container -->
+</div>
 
-<!-- ── Admin Login ── -->
+<!-- Admin -->
 <div class="admin-section">
     <button class="admin-toggle-btn" onclick="toggleAdminPanel()">🔒 Admin Login</button>
     <div id="adminPanel">
@@ -285,34 +201,21 @@
 
 <hr style="margin:40px 0;">
 
-<!-- ── Submit Form ── -->
 <h2 style="text-align:center;color:#2c5f2d;margin-bottom:20px;">Submit a Restaurant</h2>
 <p style="text-align:center;margin-bottom:25px;">
     Been to a sushi spot lately? Whether you know they're mirin-free or just want to find out,
     submit it and we'll verify it for you!
 </p>
 
-<div id="submitBanner"  class="banner">✅ Restaurant submitted! It's been added to the list as <em>Pending</em> and our team has been notified.</div>
-<div id="errorBanner"   class="banner">❌ Something went wrong. Please try again or email us directly.</div>
+<div id="submitBanner" class="banner">✅ Restaurant submitted! It's been added to the list as <em>Pending</em> and our team has been notified.</div>
+<div id="errorBanner"  class="banner">❌ Something went wrong. Please try again or email us directly.</div>
 
 <div class="submit-form">
     <div class="form-grid">
-        <div>
-            <label for="newName">Restaurant Name *</label>
-            <input id="newName" type="text" placeholder="Restaurant Name" required>
-        </div>
-        <div>
-            <label>Street Address *</label>
-            <input id="newAddress" type="text" placeholder="Street Address" required>
-        </div>
-        <div>
-            <label>City *</label>
-            <input id="newCity" type="text" placeholder="City" required>
-        </div>
-        <div>
-            <label>State *</label>
-            <input id="newState" type="text" placeholder="FL" maxlength="2" required>
-        </div>
+        <div><label for="newName">Restaurant Name *</label><input id="newName" type="text" placeholder="Restaurant Name" required></div>
+        <div><label>Street Address *</label><input id="newAddress" type="text" placeholder="Street Address" required></div>
+        <div><label>City *</label><input id="newCity" type="text" placeholder="City" required></div>
+        <div><label>State *</label><input id="newState" type="text" placeholder="FL" maxlength="2" required></div>
         <div>
             <label>Dining Style</label>
             <select id="newStyle">
@@ -329,106 +232,111 @@
                 <option value="No">No</option>
             </select>
         </div>
-        <div>
-            <label>Your Email (optional)</label>
-            <input id="newEmail" type="email" placeholder="you@example.com">
-        </div>
+        <div><label>Your Email (optional)</label><input id="newEmail" type="email" placeholder="you@example.com"></div>
     </div>
-    <div style="margin-top:20px;">
-        <label>Additional Notes</label>
-        <textarea id="newNotes" rows="4"></textarea>
-    </div>
+    <div style="margin-top:20px;"><label>Additional Notes</label><textarea id="newNotes" rows="4"></textarea></div>
     <button type="button" onclick="submitRestaurant()">Submit Restaurant</button>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-/* ═══════════════════════════════════════════
+<script>
+/* ═══════════════════════════════════
    CONFIG
-═══════════════════════════════════════════ */
-const SCRIPT_URL   = "https://script.google.com/macros/s/AKfycbzkIo-EtjhuSVTHl9SqnecHuWsfjqZoXmFqErqB17CoAUn-2aItfsmF0aoHIVVbxAzc/exec";
+═══════════════════════════════════ */
+// CSV URL — used for READING (no CORS issues)
+const CSV_URL      = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSO4-E9in6zc4TKpAxQUhkklZsXkxUoAfSaPdmIWyCBZ8anleRRfcZaA2jR9fhv3MP57SFXTqAg8r4C/pub?gid=0&single=true&output=csv";
+// Apps Script URL — used for WRITING (add / verify / edit)
+const SCRIPT_URL   = "https://script.google.com/macros/s/AKfycbwhM1bjaoNaM8zel9OgxoMbCAq5M3ZqjwnxOXJ7fEUeMrfSwn6suA1qAzpXmxCKoviR/exec";
+// Formspree — email notifications
 const FORMSPREE    = "https://formspree.io/f/xreakwen";
 const ADMIN_PASSWORD = "9752";
 
 let isAdminLoggedIn = false;
 
-/* ═══════════════════════════════════════════
+/* ═══════════════════════════════════
    UTILITIES
-═══════════════════════════════════════════ */
+═══════════════════════════════════ */
 function escapeHtml(str) {
     var d = document.createElement("div");
     d.appendChild(document.createTextNode(String(str || "")));
     return d.innerHTML;
 }
-
 function todayStr() {
     return new Date().toLocaleDateString("en-US", { month:"short", day:"numeric", year:"numeric" });
 }
-
 function buildMapsUrl(name, address, city, state) {
     return "https://www.google.com/maps/search/?api=1&query=" +
         encodeURIComponent(name + ", " + address + ", " + city + ", " + state);
 }
-
 function showBanner(id, duration) {
     var el = document.getElementById(id);
     el.style.display = "block";
     setTimeout(function() { el.style.display = "none"; }, duration || 6000);
 }
 
-/* ═══════════════════════════════════════════
-   SHEET API CALLS
-═══════════════════════════════════════════ */
-async function sheetPost(payload) {
-    const res = await fetch(SCRIPT_URL, {
-        method:  "POST",
-        body:    JSON.stringify(payload),
-        headers: { "Content-Type": "text/plain" }
-    });
-    return res.json();
+/* ═══════════════════════════════════
+   PARSE CSV TEXT → array of objects
+═══════════════════════════════════ */
+function parseCSV(text) {
+    var lines = text.trim().split("\n");
+    var headers = splitCSVLine(lines[0]);
+    var rows = [];
+    for (var i = 1; i < lines.length; i++) {
+        if (!lines[i].trim()) continue;
+        var vals = splitCSVLine(lines[i]);
+        var obj = {};
+        headers.forEach(function(h, j) {
+            obj[h.trim()] = (vals[j] || "").trim();
+        });
+        rows.push(obj);
+    }
+    return rows;
 }
 
-/* ═══════════════════════════════════════════
-   LOAD RESTAURANTS FROM SHEET ON PAGE LOAD
-═══════════════════════════════════════════ */
+function splitCSVLine(line) {
+    var result = [], cur = "", inQuotes = false;
+    for (var i = 0; i < line.length; i++) {
+        var ch = line[i];
+        if (ch === '"') { inQuotes = !inQuotes; }
+        else if (ch === ',' && !inQuotes) { result.push(cur); cur = ""; }
+        else { cur += ch; }
+    }
+    result.push(cur);
+    return result;
+}
+
+/* ═══════════════════════════════════
+   LOAD FROM CSV
+═══════════════════════════════════ */
 async function loadRestaurants() {
     try {
-        const res = await fetch(SCRIPT_URL + "?t=" + Date.now(), {
-            method: "GET",
-            redirect: "follow"
-        });
-
+        var res = await fetch(CSV_URL + "&t=" + Date.now());
         if (!res.ok) throw new Error("HTTP " + res.status);
+        var text = await res.text();
+        var rows = parseCSV(text);
 
-        const rows = await res.json();
-
-        if (!Array.isArray(rows)) throw new Error("Unexpected response format");
-
-        const tbody = document.getElementById("restaurantBody");
+        var tbody = document.getElementById("restaurantBody");
         tbody.innerHTML = "";
-
         rows.forEach(function(r) {
-            var tr = buildRow(r);
-            tbody.appendChild(tr);
+            tbody.appendChild(buildRow(r));
         });
 
-        document.getElementById("loadingMsg").style.display   = "none";
+        document.getElementById("loadingMsg").style.display = "none";
         document.getElementById("restaurantTable").style.display = "";
 
         if (isAdminLoggedIn) {
             document.getElementById("restaurantTable").classList.add("admin-active");
             document.querySelectorAll("#restaurantBody tr").forEach(populateActionCell);
         }
-
     } catch(e) {
         console.error("Load error:", e);
         document.getElementById("loadingMsg").innerHTML =
-            "⚠️ Could not load restaurants. Please <a href='javascript:loadRestaurants()'>click here to retry</a> or refresh the page.";
+            '⚠️ Could not load restaurants. <a href="javascript:loadRestaurants()">Click here to retry</a>.';
     }
 }
 
-/* ═══════════════════════════════════════════
-   BUILD A TABLE ROW FROM A DATA OBJECT
-═══════════════════════════════════════════ */
+/* ═══════════════════════════════════
+   BUILD ROW
+═══════════════════════════════════ */
 function buildRow(r) {
     var name    = r["Restaurant Name"] || "";
     var address = r["Address"]         || "";
@@ -446,10 +354,10 @@ function buildRow(r) {
     tr.innerHTML =
         '<td><a href="' + url + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(name) + '</a></td>' +
         '<td>' + escapeHtml(address) + '</td>' +
-        '<td>' + escapeHtml(city) + '</td>' +
-        '<td>' + escapeHtml(state) + '</td>' +
-        '<td>' + escapeHtml(style) + '</td>' +
-        '<td>' + escapeHtml(mirin) + '</td>' +
+        '<td>' + escapeHtml(city)    + '</td>' +
+        '<td>' + escapeHtml(state)   + '</td>' +
+        '<td>' + escapeHtml(style)   + '</td>' +
+        '<td>' + escapeHtml(mirin)   + '</td>' +
         '<td class="status-cell ' + status.toLowerCase() + '">' + escapeHtml(status) + '</td>' +
         '<td class="date-cell">' + escapeHtml(date) + '</td>' +
         '<td class="action-col action-cell"></td>';
@@ -458,19 +366,31 @@ function buildRow(r) {
     return tr;
 }
 
-/* ═══════════════════════════════════════════
-   MIRIN ROW COLORS
-═══════════════════════════════════════════ */
+/* ═══════════════════════════════════
+   MIRIN COLORS
+═══════════════════════════════════ */
 function applyMirinClass(row) {
     var val = row.cells[5].innerText.trim();
-    row.classList.remove("mirin-no", "mirin-yes");
+    row.classList.remove("mirin-no","mirin-yes");
     if (val === "No")  row.classList.add("mirin-no");
     if (val === "Yes") row.classList.add("mirin-yes");
 }
 
-/* ═══════════════════════════════════════════
+/* ═══════════════════════════════════
+   SHEET WRITE (Apps Script)
+═══════════════════════════════════ */
+async function sheetPost(payload) {
+    var res = await fetch(SCRIPT_URL, {
+        method:  "POST",
+        body:    JSON.stringify(payload),
+        headers: { "Content-Type": "text/plain" }
+    });
+    return res.json();
+}
+
+/* ═══════════════════════════════════
    ADMIN LOGIN
-═══════════════════════════════════════════ */
+═══════════════════════════════════ */
 function toggleAdminPanel() {
     var panel = document.getElementById("adminPanel");
     panel.style.display = panel.style.display === "none" ? "block" : "none";
@@ -497,9 +417,9 @@ function loginAdmin() {
     }
 }
 
-/* ═══════════════════════════════════════════
+/* ═══════════════════════════════════
    ACTION CELL
-═══════════════════════════════════════════ */
+═══════════════════════════════════ */
 function populateActionCell(row) {
     var cell = row.cells[8];
     if (!cell) return;
@@ -513,21 +433,18 @@ function populateActionCell(row) {
     cell.innerHTML = html;
 }
 
-/* ═══════════════════════════════════════════
-   VERIFY ROW → updates sheet
-═══════════════════════════════════════════ */
+/* ═══════════════════════════════════
+   VERIFY
+═══════════════════════════════════ */
 async function verifyRow(btn) {
     var row        = btn.closest("tr");
     var nameCell   = row.cells[0];
-    var addrCell   = row.cells[1];
     var statusCell = row.querySelector(".status-cell");
     var dateCell   = row.querySelector(".date-cell");
     var today      = todayStr();
+    var name       = nameCell.querySelector("a") ? nameCell.querySelector("a").textContent.trim() : nameCell.innerText.trim();
+    var address    = row.cells[1].innerText.trim();
 
-    var name    = nameCell.querySelector("a") ? nameCell.querySelector("a").textContent.trim() : nameCell.innerText.trim();
-    var address = addrCell.innerText.trim();
-
-    // Optimistic UI update
     statusCell.className   = "status-cell verified";
     statusCell.textContent = "Verified";
     row.dataset.status     = "verified";
@@ -535,22 +452,14 @@ async function verifyRow(btn) {
     applyMirinClass(row);
     populateActionCell(row);
 
-    // Sync to sheet
     try {
-        await sheetPost({
-            action:          "verify",
-            "Restaurant Name": name,
-            "Address":         address,
-            "Date Verified":   today
-        });
-    } catch(e) {
-        console.warn("Sheet verify error:", e);
-    }
+        await sheetPost({ action:"verify", "Restaurant Name":name, "Address":address, "Date Verified":today });
+    } catch(e) { console.warn("Verify sync error:", e); }
 }
 
-/* ═══════════════════════════════════════════
-   EDIT ROW (inline) → saves to sheet on Save
-═══════════════════════════════════════════ */
+/* ═══════════════════════════════════
+   EDIT ROW
+═══════════════════════════════════ */
 var FIELD_DEFS = [
     { idx:0, type:"text",   label:"Name" },
     { idx:1, type:"text",   label:"Address" },
@@ -589,104 +498,83 @@ function startEdit(btn) {
                 if (opt === val) o.selected = true;
                 sel.appendChild(o);
             });
-            cell.innerHTML = "";
-            cell.appendChild(sel);
+            cell.innerHTML = ""; cell.appendChild(sel);
         } else {
             var inp = document.createElement("input");
-            inp.type = "text";
-            inp.className = "cell-input";
-            inp.value = val;
+            inp.type = "text"; inp.className = "cell-input"; inp.value = val;
             if (f.maxlen) inp.maxLength = f.maxlen;
-            cell.innerHTML = "";
-            cell.appendChild(inp);
+            cell.innerHTML = ""; cell.appendChild(inp);
         }
     });
 
-    var actionCell = row.cells[8];
-    if (actionCell) {
-        actionCell.innerHTML =
-            '<button class="save-btn"   onclick="saveEdit(this)">💾 Save</button> ' +
-            '<button class="cancel-btn" onclick="cancelEdit(this)">✕ Cancel</button>';
-    }
+    var ac = row.cells[8];
+    if (ac) ac.innerHTML =
+        '<button class="save-btn" onclick="saveEdit(this)">💾 Save</button> ' +
+        '<button class="cancel-btn" onclick="cancelEdit(this)">✕ Cancel</button>';
 }
 
 async function saveEdit(btn) {
-    var row = btn.closest("tr");
+    var row  = btn.closest("tr");
     var orig = JSON.parse(row.dataset.origValues || "[]");
-
-    var newValues = FIELD_DEFS.map(function(f) {
+    var newV = FIELD_DEFS.map(function(f) {
         var el = row.cells[f.idx].querySelector("input, select");
         return el ? el.value.trim() : "";
     });
 
-    // Write back to DOM
     FIELD_DEFS.forEach(function(f, i) {
-        var cell = row.cells[f.idx];
-        var val  = newValues[i];
+        var cell = row.cells[f.idx]; var val = newV[i];
         if (f.idx === 0) {
-            cell.innerHTML =
-                '<a href="' + buildMapsUrl(val, newValues[1], newValues[2], newValues[3]) +
+            cell.innerHTML = '<a href="' + buildMapsUrl(val, newV[1], newV[2], newV[3]) +
                 '" target="_blank" rel="noopener noreferrer">' + escapeHtml(val) + '</a>';
         } else if (f.idx === 6) {
-            cell.className   = "status-cell " + val.toLowerCase();
+            cell.className = "status-cell " + val.toLowerCase();
             cell.textContent = val;
             row.dataset.status = val.toLowerCase();
-        } else {
-            cell.textContent = val;
-        }
+        } else { cell.textContent = val; }
     });
 
     row.dataset.editing = "false";
     applyMirinClass(row);
     populateActionCell(row);
 
-    // Sync to sheet
     try {
         await sheetPost({
-            action:            "edit",
+            action:"edit",
             "Original Name":    orig[0],
             "Original Address": orig[1],
-            "Restaurant Name":  newValues[0],
-            "Address":          newValues[1],
-            "City":             newValues[2],
-            "State":            newValues[3],
-            "Dining Style":     newValues[4],
-            "Uses Mirin":       newValues[5],
-            "Status":           newValues[6],
-            "Date Verified":    newValues[7]
+            "Restaurant Name":  newV[0],
+            "Address":          newV[1],
+            "City":             newV[2],
+            "State":            newV[3],
+            "Dining Style":     newV[4],
+            "Uses Mirin":       newV[5],
+            "Status":           newV[6],
+            "Date Verified":    newV[7]
         });
-    } catch(e) {
-        console.warn("Sheet edit error:", e);
-    }
+    } catch(e) { console.warn("Edit sync error:", e); }
 }
 
 function cancelEdit(btn) {
     var row  = btn.closest("tr");
     var orig = JSON.parse(row.dataset.origValues || "[]");
-
     FIELD_DEFS.forEach(function(f, i) {
-        var cell = row.cells[f.idx];
-        var val  = orig[i] !== undefined ? orig[i] : "";
+        var cell = row.cells[f.idx]; var val = orig[i] || "";
         if (f.idx === 0) {
-            cell.innerHTML =
-                '<a href="' + buildMapsUrl(val, orig[1]||"", orig[2]||"", orig[3]||"") +
+            cell.innerHTML = '<a href="' + buildMapsUrl(val, orig[1]||"", orig[2]||"", orig[3]||"") +
                 '" target="_blank" rel="noopener noreferrer">' + escapeHtml(val) + '</a>';
         } else if (f.idx === 6) {
-            cell.className   = "status-cell " + val.toLowerCase();
+            cell.className = "status-cell " + val.toLowerCase();
             cell.textContent = val;
-        } else {
-            cell.textContent = val;
-        }
+        } else { cell.textContent = val; }
     });
-
     row.dataset.editing = "false";
     applyMirinClass(row);
     populateActionCell(row);
 }
 
-/* ═══════════════════════════════════════════
-   SUBMIT NEW RESTAURANT → sheet + Formspree
-═══════════════════════════════════════════ */
+/* ═══════════════════════════════════
+   SUBMIT NEW RESTAURANT
+═══════════════════════════════════ */
 async function submitRestaurant() {
     var name    = document.getElementById("newName").value.trim();
     var address = document.getElementById("newAddress").value.trim();
@@ -702,68 +590,42 @@ async function submitRestaurant() {
         return;
     }
 
-    // 1) Add row to table immediately as Pending
-    var tbody = document.getElementById("restaurantBody");
-    var tr = buildRow({
-        "Restaurant Name": name,
-        "Address":   address,
-        "City":      city,
-        "State":     state,
-        "Dining Style": style,
-        "Uses Mirin":   mirin,
-        "Status":    "Pending",
-        "Date Verified": "—"
-    });
-    tbody.appendChild(tr);
+    // Add to table immediately
+    var tr = buildRow({ "Restaurant Name":name, "Address":address, "City":city, "State":state,
+        "Dining Style":style, "Uses Mirin":mirin, "Status":"Pending", "Date Verified":"—" });
+    document.getElementById("restaurantBody").appendChild(tr);
     if (isAdminLoggedIn) populateActionCell(tr);
 
-    // 2) Write to Google Sheet
+    // Write to sheet
     try {
-        await sheetPost({
-            action:            "add",
-            "Restaurant Name": name,
-            "Address":         address,
-            "City":            city,
-            "State":           state,
-            "Dining Style":    style,
-            "Uses Mirin":      mirin,
-            "Notes":           notes
-        });
+        await sheetPost({ action:"add", "Restaurant Name":name, "Address":address,
+            "City":city, "State":state, "Dining Style":style, "Uses Mirin":mirin, "Notes":notes });
     } catch(e) {
         console.warn("Sheet add error:", e);
-        showBanner("errorBanner", 7000);
-        return;
     }
 
-    // 3) Also notify via Formspree (email to you)
+    // Email notification via Formspree
     try {
         var fd = new FormData();
-        fd.append("Restaurant Name", name);
-        fd.append("Address",         address);
-        fd.append("City",            city);
-        fd.append("State",           state);
-        fd.append("Dining Style",    style);
-        fd.append("Uses Mirin",      mirin);
-        fd.append("Submitter Email", email);
-        fd.append("Notes",           notes);
+        fd.append("Restaurant Name", name); fd.append("Address", address);
+        fd.append("City", city);            fd.append("State", state);
+        fd.append("Dining Style", style);   fd.append("Uses Mirin", mirin);
+        fd.append("Submitter Email", email); fd.append("Notes", notes);
         await fetch(FORMSPREE, { method:"POST", body:fd, headers:{"Accept":"application/json"} });
-    } catch(e) {
-        console.warn("Formspree error:", e);
-    }
+    } catch(e) { console.warn("Formspree error:", e); }
 
-    // 4) Clear form
+    // Clear form
     ["newName","newAddress","newCity","newState","newNotes","newEmail"].forEach(function(id) {
         document.getElementById(id).value = "";
     });
     document.getElementById("newStyle").value = "Unknown";
     document.getElementById("newMirin").value = "Unknown";
-
     showBanner("submitBanner", 6000);
 }
 
-/* ═══════════════════════════════════════════
-   DYNAMIC FILTERS
-═══════════════════════════════════════════ */
+/* ═══════════════════════════════════
+   FILTERS
+═══════════════════════════════════ */
 function filterTable() {
     var city  = document.getElementById("filterCity").value.toLowerCase();
     var state = document.getElementById("filterState").value.toUpperCase();
@@ -771,27 +633,26 @@ function filterTable() {
     var style = document.getElementById("filterStyle").value;
 
     document.querySelectorAll("#restaurantBody tr").forEach(function(row) {
-        var cityCell  = row.cells[2].innerText.toLowerCase();
-        var stateCell = row.cells[3].innerText.toUpperCase();
-        var styleCell = row.cells[4].innerText.trim();
-        var mirinCell = row.cells[5].innerText.trim();
-
         var show = true;
-        if (city  && cityCell.indexOf(city) === -1)   show = false;
-        if (state && stateCell.indexOf(state) === -1) show = false;
-        if (mirin && mirinCell !== mirin)            show = false;
-        if (style && styleCell !== style)            show = false;
-
+        if (city  && row.cells[2].innerText.toLowerCase().indexOf(city) === -1) show = false;
+        if (state && row.cells[3].innerText.toUpperCase().indexOf(state) === -1) show = false;
+        if (mirin && row.cells[5].innerText.trim() !== mirin) show = false;
+        if (style && row.cells[4].innerText.trim() !== style) show = false;
         row.style.display = show ? "" : "none";
     });
 }
 
 function clearFilters() {
-    document.getElementById("filterCity").value  = "";
-    document.getElementById("filterState").value = "";
-    document.getElementById("filterMirin").value = "";
-    document.getElementById("filterStyle").value = "";
+    ["filterCity","filterState"].forEach(function(id){ document.getElementById(id).value = ""; });
+    ["filterMirin","filterStyle"].forEach(function(id){ document.getElementById(id).value = ""; });
     filterTable();
 }
 
-/* ══════════════════════════════════ 
+/* ═══════════════════════════════════
+   INIT
+═══════════════════════════════════ */
+document.addEventListener("DOMContentLoaded", loadRestaurants);
+</script>
+
+</body>
+</html>
