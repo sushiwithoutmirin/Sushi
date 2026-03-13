@@ -141,7 +141,7 @@
 
     <p class="email">
         Have any comments or suggestions?
-        Email us at: <a href="/cdn-cgi/l/email-protection#f98a8c8a91908e908d91968c8d94908b9097b99e94989095d79a9694"><span class="__cf_email__" data-cfemail="89fafcfae1e0fee0fde1e6fcfde4e0fbe0e7c9eee4e8e0e5a7eae6e4">[email&#160;protected]</span></a>
+        Email us at: <a href="mailto:sushiwithoutmirin@gmail.com">sushiwithoutmirin@gmail.com</a>
     </p>
 
     <div class="filters">
@@ -187,7 +187,6 @@
 
 </div>
 
-<!-- Admin -->
 <div class="admin-section">
     <button class="admin-toggle-btn" onclick="toggleAdminPanel()">🔒 Admin Login</button>
     <div id="adminPanel">
@@ -238,22 +237,19 @@
     <button type="button" onclick="submitRestaurant()">Submit Restaurant</button>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 /* ═══════════════════════════════════
-   CONFIG
+    CONFIG
 ═══════════════════════════════════ */
-// CSV URL — used for READING (no CORS issues)
 const CSV_URL      = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSO4-E9in6zc4TKpAxQUhkklZsXkxUoAfSaPdmIWyCBZ8anleRRfcZaA2jR9fhv3MP57SFXTqAg8r4C/pub?gid=0&single=true&output=csv";
-// Apps Script URL — used for WRITING (add / verify / edit)
 const SCRIPT_URL   = "https://script.google.com/macros/s/AKfycbwhM1bjaoNaM8zel9OgxoMbCAq5M3ZqjwnxOXJ7fEUeMrfSwn6suA1qAzpXmxCKoviR/exec";
-// Formspree — email notifications
 const FORMSPREE    = "https://formspree.io/f/xreakwen";
 const ADMIN_PASSWORD = "9752";
 
 let isAdminLoggedIn = false;
 
 /* ═══════════════════════════════════
-   UTILITIES
+    UTILITIES
 ═══════════════════════════════════ */
 function escapeHtml(str) {
     var d = document.createElement("div");
@@ -273,8 +269,24 @@ function showBanner(id, duration) {
     setTimeout(function() { el.style.display = "none"; }, duration || 6000);
 }
 
+// NEW: Sorters the rows alphabetically by column 0 (Restaurant Name)
+function sortTable() {
+    const tbody = document.getElementById("restaurantBody");
+    const rows = Array.from(tbody.querySelectorAll("tr"));
+
+    rows.sort((a, b) => {
+        // Extract names from anchors or raw text
+        const nameA = (a.cells[0].querySelector("a") ? a.cells[0].querySelector("a").textContent : a.cells[0].innerText).trim().toLowerCase();
+        const nameB = (b.cells[0].querySelector("a") ? b.cells[0].querySelector("a").textContent : b.cells[0].innerText).trim().toLowerCase();
+        return nameA.localeCompare(nameB);
+    });
+
+    // Re-append to DOM
+    rows.forEach(row => tbody.appendChild(row));
+}
+
 /* ═══════════════════════════════════
-   PARSE CSV TEXT → array of objects
+    PARSE CSV TEXT → array of objects
 ═══════════════════════════════════ */
 function parseCSV(text) {
     var lines = text.trim().split("\n");
@@ -305,7 +317,7 @@ function splitCSVLine(line) {
 }
 
 /* ═══════════════════════════════════
-   LOAD FROM CSV
+    LOAD FROM CSV
 ═══════════════════════════════════ */
 async function loadRestaurants() {
     try {
@@ -320,10 +332,11 @@ async function loadRestaurants() {
             tbody.appendChild(buildRow(r));
         });
 
+        // Trigger Sort on load
+        sortTable();
+
         document.getElementById("loadingMsg").style.display = "none";
         document.getElementById("restaurantTable").style.display = "";
-        sortTable();
-        sortTable();
 
         if (isAdminLoggedIn) {
             document.getElementById("restaurantTable").classList.add("admin-active");
@@ -337,13 +350,13 @@ async function loadRestaurants() {
 }
 
 /* ═══════════════════════════════════
-   BUILD ROW
+    BUILD ROW
 ═══════════════════════════════════ */
 function buildRow(r) {
     var name    = r["Restaurant Name"] || "";
     var address = r["Address"]         || "";
     var city    = r["City"]            || "";
-    var state   = r["State"]           || "";
+    var state    = r["State"]           || "";
     var style   = r["Dining Style"]    || "";
     var mirin   = r["Uses Mirin"]      || "";
     var status  = r["Status"]          || "Pending";
@@ -369,7 +382,7 @@ function buildRow(r) {
 }
 
 /* ═══════════════════════════════════
-   MIRIN COLORS
+    MIRIN COLORS
 ═══════════════════════════════════ */
 function applyMirinClass(row) {
     var val = row.cells[5].innerText.trim();
@@ -379,7 +392,7 @@ function applyMirinClass(row) {
 }
 
 /* ═══════════════════════════════════
-   SHEET WRITE (Apps Script)
+    SHEET WRITE (Apps Script)
 ═══════════════════════════════════ */
 async function sheetPost(payload) {
     var res = await fetch(SCRIPT_URL, {
@@ -391,7 +404,7 @@ async function sheetPost(payload) {
 }
 
 /* ═══════════════════════════════════
-   ADMIN LOGIN
+    ADMIN LOGIN
 ═══════════════════════════════════ */
 function toggleAdminPanel() {
     var panel = document.getElementById("adminPanel");
@@ -420,7 +433,7 @@ function loginAdmin() {
 }
 
 /* ═══════════════════════════════════
-   ACTION CELL
+    ACTION CELL
 ═══════════════════════════════════ */
 function populateActionCell(row) {
     var cell = row.cells[8];
@@ -436,7 +449,7 @@ function populateActionCell(row) {
 }
 
 /* ═══════════════════════════════════
-   VERIFY
+    VERIFY
 ═══════════════════════════════════ */
 async function verifyRow(btn) {
     var row        = btn.closest("tr");
@@ -460,7 +473,7 @@ async function verifyRow(btn) {
 }
 
 /* ═══════════════════════════════════
-   EDIT ROW
+    EDIT ROW
 ═══════════════════════════════════ */
 var FIELD_DEFS = [
     { idx:0, type:"text",   label:"Name" },
@@ -538,7 +551,13 @@ async function saveEdit(btn) {
     row.dataset.editing = "false";
     applyMirinClass(row);
     populateActionCell(row);
+
+    // Trigger Sort after Edit
     sortTable();
+
+    try {
+        await sheetPost({
+            action:"edit",
             "Original Name":    orig[0],
             "Original Address": orig[1],
             "Restaurant Name":  newV[0],
@@ -572,7 +591,7 @@ function cancelEdit(btn) {
 }
 
 /* ═══════════════════════════════════
-   SUBMIT NEW RESTAURANT
+    SUBMIT NEW RESTAURANT
 ═══════════════════════════════════ */
 async function submitRestaurant() {
     var name    = document.getElementById("newName").value.trim();
@@ -594,7 +613,8 @@ async function submitRestaurant() {
         "Dining Style":style, "Uses Mirin":mirin, "Status":"Pending", "Date Verified":"—" });
     document.getElementById("restaurantBody").appendChild(tr);
     if (isAdminLoggedIn) populateActionCell(tr);
-    sortTable();
+
+    // Trigger Sort after Submission
     sortTable();
 
     // Write to sheet
@@ -625,35 +645,7 @@ async function submitRestaurant() {
 }
 
 /* ═══════════════════════════════════
-   SORT TABLE ALPHABETICALLY BY NAME
-═══════════════════════════════════ */
-function sortTable() {
-    var tbody = document.getElementById("restaurantBody");
-    var rows  = Array.from(tbody.querySelectorAll("tr"));
-    rows.sort(function(a, b) {
-        var nameA = a.cells[0].innerText.trim().toLowerCase();
-        var nameB = b.cells[0].innerText.trim().toLowerCase();
-        return nameA.localeCompare(nameB);
-    });
-    rows.forEach(function(row) { tbody.appendChild(row); });
-}
-
-/* ═══════════════════════════════════
-   SORT ALPHABETICALLY BY NAME
-═══════════════════════════════════ */
-function sortTable() {
-    var tbody = document.getElementById("restaurantBody");
-    var rows  = Array.from(tbody.querySelectorAll("tr"));
-    rows.sort(function(a, b) {
-        var nameA = a.cells[0].innerText.trim().toLowerCase();
-        var nameB = b.cells[0].innerText.trim().toLowerCase();
-        return nameA.localeCompare(nameB);
-    });
-    rows.forEach(function(row) { tbody.appendChild(row); });
-}
-
-/* ═══════════════════════════════════
-   FILTERS
+    FILTERS
 ═══════════════════════════════════ */
 function filterTable() {
     var city  = document.getElementById("filterCity").value.toLowerCase();
@@ -677,4 +669,11 @@ function clearFilters() {
     filterTable();
 }
 
-/* ══════════════════ 
+/* ═══════════════════════════════════
+    INIT
+═══════════════════════════════════ */
+document.addEventListener("DOMContentLoaded", loadRestaurants);
+</script>
+
+</body>
+</html>
