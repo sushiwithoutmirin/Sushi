@@ -141,7 +141,7 @@
 
     <p class="email">
         Have any comments or suggestions?
-        Email us at: <a href="mailto:sushiwithoutmirin@gmail.com">sushiwithoutmirin@gmail.com</a>
+        Email us at: <a href="/cdn-cgi/l/email-protection#f98a8c8a91908e908d91968c8d94908b9097b99e94989095d79a9694"><span class="__cf_email__" data-cfemail="89fafcfae1e0fee0fde1e6fcfde4e0fbe0e7c9eee4e8e0e5a7eae6e4">[email&#160;protected]</span></a>
     </p>
 
     <div class="filters">
@@ -238,7 +238,7 @@
     <button type="button" onclick="submitRestaurant()">Submit Restaurant</button>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ═══════════════════════════════════
    CONFIG
 ═══════════════════════════════════ */
@@ -322,6 +322,7 @@ async function loadRestaurants() {
 
         document.getElementById("loadingMsg").style.display = "none";
         document.getElementById("restaurantTable").style.display = "";
+        sortTable();
 
         if (isAdminLoggedIn) {
             document.getElementById("restaurantTable").classList.add("admin-active");
@@ -536,10 +537,7 @@ async function saveEdit(btn) {
     row.dataset.editing = "false";
     applyMirinClass(row);
     populateActionCell(row);
-
-    try {
-        await sheetPost({
-            action:"edit",
+    sortTable();
             "Original Name":    orig[0],
             "Original Address": orig[1],
             "Restaurant Name":  newV[0],
@@ -595,6 +593,7 @@ async function submitRestaurant() {
         "Dining Style":style, "Uses Mirin":mirin, "Status":"Pending", "Date Verified":"—" });
     document.getElementById("restaurantBody").appendChild(tr);
     if (isAdminLoggedIn) populateActionCell(tr);
+    sortTable();
 
     // Write to sheet
     try {
@@ -624,6 +623,20 @@ async function submitRestaurant() {
 }
 
 /* ═══════════════════════════════════
+   SORT TABLE ALPHABETICALLY BY NAME
+═══════════════════════════════════ */
+function sortTable() {
+    var tbody = document.getElementById("restaurantBody");
+    var rows  = Array.from(tbody.querySelectorAll("tr"));
+    rows.sort(function(a, b) {
+        var nameA = a.cells[0].innerText.trim().toLowerCase();
+        var nameB = b.cells[0].innerText.trim().toLowerCase();
+        return nameA.localeCompare(nameB);
+    });
+    rows.forEach(function(row) { tbody.appendChild(row); });
+}
+
+/* ═══════════════════════════════════
    FILTERS
 ═══════════════════════════════════ */
 function filterTable() {
@@ -648,11 +661,4 @@ function clearFilters() {
     filterTable();
 }
 
-/* ═══════════════════════════════════
-   INIT
-═══════════════════════════════════ */
-document.addEventListener("DOMContentLoaded", loadRestaurants);
-</script>
-
-</body>
-</html>
+/* ══════════════════ 
