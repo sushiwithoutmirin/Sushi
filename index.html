@@ -34,6 +34,19 @@
     a:hover { text-decoration: underline; }
     .email { font-weight: bold; margin-top: 10px; }
 
+    /* ── Loading State ── */
+    #loadingMsg {
+        text-align: center;
+        padding: 30px;
+        font-size: 1.1rem;
+        color: #666;
+    }
+    #loadingMsg span {
+        display: inline-block;
+        animation: pulse 1.2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
     /* ── Filter Bar ── */
     .filters {
         display: flex;
@@ -85,7 +98,7 @@
     .mirin-no  { background-color: #e8ffe8 !important; font-weight: bold; }
     .mirin-yes { background-color: #ffe0e0 !important; color: #b00000; font-weight: bold; }
 
-    /* ── Admin Action Column — hidden until admin logs in ── */
+    /* ── Admin Action Column ── */
     .action-col { display: none; }
     table.admin-active .action-col { display: table-cell; }
 
@@ -173,13 +186,14 @@
     }
     .submit-form button:hover { background: #3a7a3a; }
 
-    /* ── Success Banner ── */
-    #submitBanner {
+    /* ── Banners ── */
+    .banner {
         display: none;
-        background: #d9f2d0; border: 1px solid #2c5f2d; color: #2c5f2d;
         padding: 14px 20px; border-radius: 8px; text-align: center;
         font-weight: bold; margin: 20px auto; max-width: 700px;
     }
+    #submitBanner  { background:#d9f2d0; border:1px solid #2c5f2d; color:#2c5f2d; }
+    #errorBanner   { background:#ffe0e0; border:1px solid #b00000; color:#b00000; }
 
     @media (max-width: 600px) {
         h1 { font-size: 1.6rem; }
@@ -206,10 +220,10 @@
 
     <p class="email">
         Have any comments or suggestions?
-        Email us at: <a href="mailto:sushiwithoutmirin@gmail.com">sushiwithoutmirin@gmail.com</a>
+        Email us at: <a href="/cdn-cgi/l/email-protection#631016100b0a140a170b0c16170e0a110a0d23040e020a0f4d000c0e"><span class="__cf_email__" data-cfemail="6b181e1803021c021f03041e1f06021902052b0c060a020745080406">[email&#160;protected]</span></a>
     </p>
 
-    <!-- ── Dynamic Filters (no Filter button) ── -->
+    <!-- ── Dynamic Filters ── -->
     <div class="filters">
         <label>City:
             <input type="text" id="filterCity" placeholder="Orlando" oninput="filterTable()">
@@ -236,7 +250,8 @@
     </div>
 
     <div class="table-wrapper">
-        <table id="restaurantTable">
+        <div id="loadingMsg"><span>⏳ Loading restaurants…</span></div>
+        <table id="restaurantTable" style="display:none;">
             <thead>
                 <tr>
                     <th>Restaurant Name</th>
@@ -250,199 +265,7 @@
                     <th class="action-col">Actions</th>
                 </tr>
             </thead>
-            <tbody id="restaurantBody">
-
-                <tr data-status="verified">
-                    <td>A-Aki Sushi &amp; Steakhouse</td>
-                    <td>3680 Avalon Park E Blvd</td>
-                    <td>Orlando</td><td>FL</td>
-                    <td>All You Can Eat</td><td>Yes</td>
-                    <td class="status-cell verified">Verified</td>
-                    <td class="date-cell">Jan 24, 2026</td>
-                    <td class="action-col action-cell"></td>
-                </tr>
-
-                <tr data-status="verified">
-                    <td>Baku Asian Fusion Sushi Bar</td>
-                    <td>8204 Crystal Clear Ln Suit #1300</td>
-                    <td>Orlando</td><td>FL</td>
-                    <td>A La Carte</td><td>No</td>
-                    <td class="status-cell verified">Verified</td>
-                    <td class="date-cell">Mar 4, 2026</td>
-                    <td class="action-col action-cell"></td>
-                </tr>
-
-                <tr data-status="verified">
-                    <td>Banyan City Buffet</td>
-                    <td>5403 W Colonial Dr</td>
-                    <td>Orlando</td><td>FL</td>
-                    <td>All You Can Eat</td><td>No</td>
-                    <td class="status-cell verified">Verified</td>
-                    <td class="date-cell">Feb 23, 2026</td>
-                    <td class="action-col action-cell"></td>
-                </tr>
-
-                <tr data-status="verified">
-                    <td>Bayridge Sushi</td>
-                    <td>400 Savage Ct</td>
-                    <td>Longwood</td><td>FL</td>
-                    <td>A La Carte</td><td>Yes</td>
-                    <td class="status-cell verified">Verified</td>
-                    <td class="date-cell">Jan 11, 2026</td>
-                    <td class="action-col action-cell"></td>
-                </tr>
-
-                <tr data-status="verified">
-                    <td>Chow's Country Buffet</td>
-                    <td>3125 Columbia Blvd</td>
-                    <td>Titusville</td><td>FL</td>
-                    <td>All You Can Eat</td><td>No</td>
-                    <td class="status-cell verified">Verified</td>
-                    <td class="date-cell">Feb 23, 2026</td>
-                    <td class="action-col action-cell"></td>
-                </tr>
-
-                <tr data-status="verified">
-                    <td>Divina Carne Steakhouse</td>
-                    <td>6424 Carrier Dr</td>
-                    <td>Orlando</td><td>FL</td>
-                    <td>All You Can Eat</td><td>No</td>
-                    <td class="status-cell verified">Verified</td>
-                    <td class="date-cell">Feb 11, 2026</td>
-                    <td class="action-col action-cell"></td>
-                </tr>
-
-                <tr data-status="verified">
-                    <td>Joy Luck Buffet</td>
-                    <td>3813 S Nova Rd</td>
-                    <td>Port Orange</td><td>FL</td>
-                    <td>All You Can Eat</td><td>No</td>
-                    <td class="status-cell verified">Verified</td>
-                    <td class="date-cell">Dec 21, 2025</td>
-                    <td class="action-col action-cell"></td>
-                </tr>
-
-                <tr data-status="verified">
-                    <td>Kingdom Sushi</td>
-                    <td>5632 International Dr</td>
-                    <td>Orlando</td><td>FL</td>
-                    <td>All You Can Eat</td><td>No</td>
-                    <td class="status-cell verified">Verified</td>
-                    <td class="date-cell">Dec 17, 2025</td>
-                    <td class="action-col action-cell"></td>
-                </tr>
-
-                <tr data-status="verified">
-                    <td>Kingu Sushi</td>
-                    <td>7726 Winegard Rd</td>
-                    <td>Pine Castle</td><td>FL</td>
-                    <td>All You Can Eat</td><td>No</td>
-                    <td class="status-cell verified">Verified</td>
-                    <td class="date-cell">Mar 4, 2026</td>
-                    <td class="action-col action-cell"></td>
-                </tr>
-
-                <tr data-status="verified">
-                    <td>Kizuna Asian Buffet</td>
-                    <td>12173 S Apopka Vineland Rd</td>
-                    <td>Orlando</td><td>FL</td>
-                    <td>All You Can Eat</td><td>No</td>
-                    <td class="status-cell verified">Verified</td>
-                    <td class="date-cell">Feb 23, 2026</td>
-                    <td class="action-col action-cell"></td>
-                </tr>
-
-                <tr data-status="verified">
-                    <td>Kyoto- Avalon</td>
-                    <td>14807 E Colonial Dr #100</td>
-                    <td>Orlando</td><td>FL</td>
-                    <td>A La Carte</td><td>Yes</td>
-                    <td class="status-cell verified">Verified</td>
-                    <td class="date-cell">Mar 11, 2026</td>
-                    <td class="action-col action-cell"></td>
-                </tr>
-
-                <tr data-status="verified">
-                    <td>Oceans Buffet</td>
-                    <td>3109 E Colonial Dr</td>
-                    <td>Orlando</td><td>FL</td>
-                    <td>All You Can Eat</td><td>Yes</td>
-                    <td class="status-cell verified">Verified</td>
-                    <td class="date-cell">Jan 27, 2026</td>
-                    <td class="action-col action-cell"></td>
-                </tr>
-
-                <tr data-status="verified">
-                    <td>Suki Hanna</td>
-                    <td>4060 Town Center Blvd</td>
-                    <td>Orlando</td><td>FL</td>
-                    <td>All You Can Eat</td><td>Yes</td>
-                    <td class="status-cell verified">Verified</td>
-                    <td class="date-cell">Jan 3, 2026</td>
-                    <td class="action-col action-cell"></td>
-                </tr>
-
-                <tr data-status="verified">
-                    <td>Sushi 99</td>
-                    <td>1024 Avalon Park N Blvd</td>
-                    <td>Orlando</td><td>FL</td>
-                    <td>A La Carte</td><td>No</td>
-                    <td class="status-cell verified">Verified</td>
-                    <td class="date-cell">Jan 7, 2026</td>
-                    <td class="action-col action-cell"></td>
-                </tr>
-
-                <tr data-status="verified">
-                    <td>Sushi Kaizen</td>
-                    <td>5320 W Irlo Bronson Hwy</td>
-                    <td>Kissimmee</td><td>FL</td>
-                    <td>All You Can Eat</td><td>Yes</td>
-                    <td class="status-cell verified">Verified</td>
-                    <td class="date-cell">Jan 7, 2026</td>
-                    <td class="action-col action-cell"></td>
-                </tr>
-
-                <tr data-status="verified">
-                    <td>Sushi Yama</td>
-                    <td>6748 Grand National Dr</td>
-                    <td>Orlando</td><td>FL</td>
-                    <td>All You Can Eat</td><td>Yes</td>
-                    <td class="status-cell verified">Verified</td>
-                    <td class="date-cell">Dec 11, 2025</td>
-                    <td class="action-col action-cell"></td>
-                </tr>
-
-                <tr data-status="verified">
-                    <td>Take a Sushi</td>
-                    <td>4725 W Sand Lake Rd</td>
-                    <td>Orlando</td><td>FL</td>
-                    <td>A La Carte</td><td>Yes</td>
-                    <td class="status-cell verified">Verified</td>
-                    <td class="date-cell">Feb 11, 2026</td>
-                    <td class="action-col action-cell"></td>
-                </tr>
-
-                <tr data-status="verified">
-                    <td>UMA Sushi</td>
-                    <td>486 N Orange Ave</td>
-                    <td>Orlando</td><td>FL</td>
-                    <td>A La Carte</td><td>No</td>
-                    <td class="status-cell verified">Verified</td>
-                    <td class="date-cell">Feb 8, 2026</td>
-                    <td class="action-col action-cell"></td>
-                </tr>
-
-                <tr data-status="verified">
-                    <td>Villa Sushi (Teppanyaki)</td>
-                    <td>10025 International Drive</td>
-                    <td>Orlando</td><td>FL</td>
-                    <td>A La Carte</td><td>Yes</td>
-                    <td class="status-cell verified">Verified</td>
-                    <td class="date-cell">Jan 29, 2026</td>
-                    <td class="action-col action-cell"></td>
-                </tr>
-
-            </tbody>
+            <tbody id="restaurantBody"></tbody>
         </table>
     </div>
 
@@ -463,14 +286,14 @@
 <hr style="margin:40px 0;">
 
 <!-- ── Submit Form ── -->
-<h2 style="text-align:center;color:#2c5f2d;margin-bottom:20px;">Submit a New Restaurant</h2>
+<h2 style="text-align:center;color:#2c5f2d;margin-bottom:20px;">Submit a Restaurant</h2>
 <p style="text-align:center;margin-bottom:25px;">
-    Help the community! Submit any sushi restaurant — whether you already know they're mirin-free or simply want us to find out.
+    Been to a sushi spot lately? Whether you know they're mirin-free or just want to find out,
+    submit it and we'll verify it for you!
 </p>
 
-<div id="submitBanner">
-    ✅ Restaurant submitted! It has been added to the list with <em>Pending</em> status and your details have been sent to our team.
-</div>
+<div id="submitBanner"  class="banner">✅ Restaurant submitted! It's been added to the list as <em>Pending</em> and our team has been notified.</div>
+<div id="errorBanner"   class="banner">❌ Something went wrong. Please try again or email us directly.</div>
 
 <div class="submit-form">
     <div class="form-grid">
@@ -518,19 +341,22 @@
     <button type="button" onclick="submitRestaurant()">Submit Restaurant</button>
 </div>
 
-<script>
-/* ════════════════════════════════════════════
-   STATE
-════════════════════════════════════════════ */
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ═══════════════════════════════════════════
+   CONFIG
+═══════════════════════════════════════════ */
+const SCRIPT_URL   = "https://script.google.com/macros/s/AKfycbzkIo-EtjhuSVTHl9SqnecHuWsfjqZoXmFqErqB17CoAUn-2aItfsmF0aoHIVVbxAzc/exec";
+const FORMSPREE    = "https://formspree.io/f/xreakwen";
 const ADMIN_PASSWORD = "9752";
+
 let isAdminLoggedIn = false;
 
-/* ════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    UTILITIES
-════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 function escapeHtml(str) {
-    const d = document.createElement("div");
-    d.appendChild(document.createTextNode(String(str)));
+    var d = document.createElement("div");
+    d.appendChild(document.createTextNode(String(str || "")));
     return d.innerHTML;
 }
 
@@ -543,50 +369,118 @@ function buildMapsUrl(name, address, city, state) {
         encodeURIComponent(name + ", " + address + ", " + city + ", " + state);
 }
 
-/* ════════════════════════════════════════════
+function showBanner(id, duration) {
+    var el = document.getElementById(id);
+    el.style.display = "block";
+    setTimeout(function() { el.style.display = "none"; }, duration || 6000);
+}
+
+/* ═══════════════════════════════════════════
+   SHEET API CALLS
+═══════════════════════════════════════════ */
+async function sheetPost(payload) {
+    const res = await fetch(SCRIPT_URL, {
+        method:  "POST",
+        body:    JSON.stringify(payload),
+        headers: { "Content-Type": "text/plain" }
+    });
+    return res.json();
+}
+
+/* ═══════════════════════════════════════════
+   LOAD RESTAURANTS FROM SHEET ON PAGE LOAD
+═══════════════════════════════════════════ */
+async function loadRestaurants() {
+    try {
+        const res = await fetch(SCRIPT_URL + "?t=" + Date.now(), {
+            method: "GET",
+            redirect: "follow"
+        });
+
+        if (!res.ok) throw new Error("HTTP " + res.status);
+
+        const rows = await res.json();
+
+        if (!Array.isArray(rows)) throw new Error("Unexpected response format");
+
+        const tbody = document.getElementById("restaurantBody");
+        tbody.innerHTML = "";
+
+        rows.forEach(function(r) {
+            var tr = buildRow(r);
+            tbody.appendChild(tr);
+        });
+
+        document.getElementById("loadingMsg").style.display   = "none";
+        document.getElementById("restaurantTable").style.display = "";
+
+        if (isAdminLoggedIn) {
+            document.getElementById("restaurantTable").classList.add("admin-active");
+            document.querySelectorAll("#restaurantBody tr").forEach(populateActionCell);
+        }
+
+    } catch(e) {
+        console.error("Load error:", e);
+        document.getElementById("loadingMsg").innerHTML =
+            "⚠️ Could not load restaurants. Please <a href='javascript:loadRestaurants()'>click here to retry</a> or refresh the page.";
+    }
+}
+
+/* ═══════════════════════════════════════════
+   BUILD A TABLE ROW FROM A DATA OBJECT
+═══════════════════════════════════════════ */
+function buildRow(r) {
+    var name    = r["Restaurant Name"] || "";
+    var address = r["Address"]         || "";
+    var city    = r["City"]            || "";
+    var state   = r["State"]           || "";
+    var style   = r["Dining Style"]    || "";
+    var mirin   = r["Uses Mirin"]      || "";
+    var status  = r["Status"]          || "Pending";
+    var date    = r["Date Verified"]   || "—";
+
+    var tr = document.createElement("tr");
+    tr.dataset.status = status.toLowerCase();
+
+    var url = buildMapsUrl(name, address, city, state);
+    tr.innerHTML =
+        '<td><a href="' + url + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(name) + '</a></td>' +
+        '<td>' + escapeHtml(address) + '</td>' +
+        '<td>' + escapeHtml(city) + '</td>' +
+        '<td>' + escapeHtml(state) + '</td>' +
+        '<td>' + escapeHtml(style) + '</td>' +
+        '<td>' + escapeHtml(mirin) + '</td>' +
+        '<td class="status-cell ' + status.toLowerCase() + '">' + escapeHtml(status) + '</td>' +
+        '<td class="date-cell">' + escapeHtml(date) + '</td>' +
+        '<td class="action-col action-cell"></td>';
+
+    applyMirinClass(tr);
+    return tr;
+}
+
+/* ═══════════════════════════════════════════
    MIRIN ROW COLORS
-════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 function applyMirinClass(row) {
-    const val = row.cells[5].innerText.trim();
-    row.classList.remove("mirin-no","mirin-yes");
+    var val = row.cells[5].innerText.trim();
+    row.classList.remove("mirin-no", "mirin-yes");
     if (val === "No")  row.classList.add("mirin-no");
     if (val === "Yes") row.classList.add("mirin-yes");
 }
 
-/* ════════════════════════════════════════════
-   MAPS LINKS
-════════════════════════════════════════════ */
-function applyMapsLinks() {
-    document.querySelectorAll("#restaurantBody tr").forEach(row => {
-        updateNameLink(row);
-    });
-}
-
-function updateNameLink(row) {
-    const nameCell = row.cells[0];
-    const existing = nameCell.querySelector("a");
-    const name     = existing ? existing.textContent.trim() : nameCell.innerText.trim();
-    const address  = row.cells[1].innerText.trim();
-    const city     = row.cells[2].innerText.trim();
-    const state    = row.cells[3].innerText.trim();
-    nameCell.innerHTML =
-        '<a href="' + buildMapsUrl(name,address,city,state) + '" target="_blank" rel="noopener noreferrer">' +
-        escapeHtml(name) + '</a>';
-}
-
-/* ════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    ADMIN LOGIN
-════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 function toggleAdminPanel() {
-    const panel = document.getElementById("adminPanel");
+    var panel = document.getElementById("adminPanel");
     panel.style.display = panel.style.display === "none" ? "block" : "none";
     document.getElementById("adminMsg").textContent = "";
     document.getElementById("adminPassword").value = "";
 }
 
 function loginAdmin() {
-    const pw  = document.getElementById("adminPassword").value;
-    const msg = document.getElementById("adminMsg");
+    var pw  = document.getElementById("adminPassword").value;
+    var msg = document.getElementById("adminMsg");
     if (pw === ADMIN_PASSWORD) {
         isAdminLoggedIn = true;
         msg.style.color = "green";
@@ -595,28 +489,22 @@ function loginAdmin() {
             document.getElementById("adminPanel").style.display = "none";
             document.querySelector(".admin-toggle-btn").textContent = "🔓 Admin Active";
         }, 700);
-        // Add class to table — CSS rule table.admin-active .action-col makes them visible
         document.getElementById("restaurantTable").classList.add("admin-active");
-        // Populate action cells for every row
-        document.querySelectorAll("#restaurantBody tr").forEach(function(row) {
-            populateActionCell(row);
-        });
+        document.querySelectorAll("#restaurantBody tr").forEach(populateActionCell);
     } else {
         msg.style.color = "#b00000";
         msg.textContent = "❌ Incorrect password.";
     }
 }
 
-/* ════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    ACTION CELL
-════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 function populateActionCell(row) {
-    // Find the action cell — it's always the last cell (index 8)
     var cell = row.cells[8];
     if (!cell) return;
-    // Make sure it keeps its classes
     cell.className = "action-col action-cell";
-    const status = row.dataset.status;
+    var status = row.dataset.status;
     var html = "";
     if (status === "pending") {
         html += '<button class="verify-btn" onclick="verifyRow(this)">✔ Verify</button> ';
@@ -625,26 +513,44 @@ function populateActionCell(row) {
     cell.innerHTML = html;
 }
 
-/* ════════════════════════════════════════════
-   VERIFY
-════════════════════════════════════════════ */
-function verifyRow(btn) {
+/* ═══════════════════════════════════════════
+   VERIFY ROW → updates sheet
+═══════════════════════════════════════════ */
+async function verifyRow(btn) {
     var row        = btn.closest("tr");
+    var nameCell   = row.cells[0];
+    var addrCell   = row.cells[1];
     var statusCell = row.querySelector(".status-cell");
     var dateCell   = row.querySelector(".date-cell");
+    var today      = todayStr();
+
+    var name    = nameCell.querySelector("a") ? nameCell.querySelector("a").textContent.trim() : nameCell.innerText.trim();
+    var address = addrCell.innerText.trim();
+
+    // Optimistic UI update
     statusCell.className   = "status-cell verified";
     statusCell.textContent = "Verified";
     row.dataset.status     = "verified";
-    dateCell.textContent   = todayStr();
+    dateCell.textContent   = today;
     applyMirinClass(row);
     populateActionCell(row);
+
+    // Sync to sheet
+    try {
+        await sheetPost({
+            action:          "verify",
+            "Restaurant Name": name,
+            "Address":         address,
+            "Date Verified":   today
+        });
+    } catch(e) {
+        console.warn("Sheet verify error:", e);
+    }
 }
 
-/* ════════════════════════════════════════════
-   EDIT ROW — inline editing for all 8 data fields
-   Columns: 0=Name 1=Address 2=City 3=State
-            4=Style 5=Mirin 6=Status 7=Date
-════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   EDIT ROW (inline) → saves to sheet on Save
+═══════════════════════════════════════════ */
 var FIELD_DEFS = [
     { idx:0, type:"text",   label:"Name" },
     { idx:1, type:"text",   label:"Address" },
@@ -661,7 +567,6 @@ function startEdit(btn) {
     if (row.dataset.editing === "true") return;
     row.dataset.editing = "true";
 
-    // Snapshot current plain-text values
     var origValues = FIELD_DEFS.map(function(f) {
         var cell = row.cells[f.idx];
         if (f.idx === 0) {
@@ -672,7 +577,6 @@ function startEdit(btn) {
     });
     row.dataset.origValues = JSON.stringify(origValues);
 
-    // Replace cells with inputs / selects
     FIELD_DEFS.forEach(function(f, i) {
         var cell = row.cells[f.idx];
         var val  = origValues[i];
@@ -698,7 +602,6 @@ function startEdit(btn) {
         }
     });
 
-    // Replace action cell (always index 8)
     var actionCell = row.cells[8];
     if (actionCell) {
         actionCell.innerHTML =
@@ -707,22 +610,20 @@ function startEdit(btn) {
     }
 }
 
-function saveEdit(btn) {
+async function saveEdit(btn) {
     var row = btn.closest("tr");
+    var orig = JSON.parse(row.dataset.origValues || "[]");
 
-    // Read new values
     var newValues = FIELD_DEFS.map(function(f) {
         var el = row.cells[f.idx].querySelector("input, select");
         return el ? el.value.trim() : "";
     });
 
-    // Write back
+    // Write back to DOM
     FIELD_DEFS.forEach(function(f, i) {
         var cell = row.cells[f.idx];
         var val  = newValues[i];
-
         if (f.idx === 0) {
-            // Rebuild link with new address/city/state values
             cell.innerHTML =
                 '<a href="' + buildMapsUrl(val, newValues[1], newValues[2], newValues[3]) +
                 '" target="_blank" rel="noopener noreferrer">' + escapeHtml(val) + '</a>';
@@ -738,6 +639,25 @@ function saveEdit(btn) {
     row.dataset.editing = "false";
     applyMirinClass(row);
     populateActionCell(row);
+
+    // Sync to sheet
+    try {
+        await sheetPost({
+            action:            "edit",
+            "Original Name":    orig[0],
+            "Original Address": orig[1],
+            "Restaurant Name":  newValues[0],
+            "Address":          newValues[1],
+            "City":             newValues[2],
+            "State":            newValues[3],
+            "Dining Style":     newValues[4],
+            "Uses Mirin":       newValues[5],
+            "Status":           newValues[6],
+            "Date Verified":    newValues[7]
+        });
+    } catch(e) {
+        console.warn("Sheet edit error:", e);
+    }
 }
 
 function cancelEdit(btn) {
@@ -747,7 +667,6 @@ function cancelEdit(btn) {
     FIELD_DEFS.forEach(function(f, i) {
         var cell = row.cells[f.idx];
         var val  = orig[i] !== undefined ? orig[i] : "";
-
         if (f.idx === 0) {
             cell.innerHTML =
                 '<a href="' + buildMapsUrl(val, orig[1]||"", orig[2]||"", orig[3]||"") +
@@ -765,9 +684,9 @@ function cancelEdit(btn) {
     populateActionCell(row);
 }
 
-/* ════════════════════════════════════════════
-   SUBMIT + FORMSPREE
-════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   SUBMIT NEW RESTAURANT → sheet + Formspree
+═══════════════════════════════════════════ */
 async function submitRestaurant() {
     var name    = document.getElementById("newName").value.trim();
     var address = document.getElementById("newAddress").value.trim();
@@ -785,62 +704,66 @@ async function submitRestaurant() {
 
     // 1) Add row to table immediately as Pending
     var tbody = document.getElementById("restaurantBody");
-    var tr    = document.createElement("tr");
-    tr.dataset.status = "pending";
-
-    var url = buildMapsUrl(name, address, city, state);
-    tr.innerHTML =
-        '<td><a href="' + url + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(name) + '</a></td>' +
-        '<td>' + escapeHtml(address) + '</td>' +
-        '<td>' + escapeHtml(city) + '</td>' +
-        '<td>' + escapeHtml(state) + '</td>' +
-        '<td>' + escapeHtml(style) + '</td>' +
-        '<td>' + escapeHtml(mirin) + '</td>' +
-        '<td class="status-cell pending">Pending</td>' +
-        '<td class="date-cell">—</td>' +
-        '<td class="action-col action-cell"></td>';
-
-    applyMirinClass(tr);
+    var tr = buildRow({
+        "Restaurant Name": name,
+        "Address":   address,
+        "City":      city,
+        "State":     state,
+        "Dining Style": style,
+        "Uses Mirin":   mirin,
+        "Status":    "Pending",
+        "Date Verified": "—"
+    });
     tbody.appendChild(tr);
     if (isAdminLoggedIn) populateActionCell(tr);
 
-    // 2) Send to Formspree via fetch (silent, no page redirect)
-    var formData = new FormData();
-    formData.append("Restaurant Name", name);
-    formData.append("Address",         address);
-    formData.append("City",            city);
-    formData.append("State",           state);
-    formData.append("Dining Style",    style);
-    formData.append("Uses Mirin",      mirin);
-    formData.append("Submitter Email", email);
-    formData.append("Notes",           notes);
-
+    // 2) Write to Google Sheet
     try {
-        await fetch("https://formspree.io/f/xreakwen", {
-            method:  "POST",
-            body:    formData,
-            headers: { "Accept": "application/json" }
+        await sheetPost({
+            action:            "add",
+            "Restaurant Name": name,
+            "Address":         address,
+            "City":            city,
+            "State":           state,
+            "Dining Style":    style,
+            "Uses Mirin":      mirin,
+            "Notes":           notes
         });
+    } catch(e) {
+        console.warn("Sheet add error:", e);
+        showBanner("errorBanner", 7000);
+        return;
+    }
+
+    // 3) Also notify via Formspree (email to you)
+    try {
+        var fd = new FormData();
+        fd.append("Restaurant Name", name);
+        fd.append("Address",         address);
+        fd.append("City",            city);
+        fd.append("State",           state);
+        fd.append("Dining Style",    style);
+        fd.append("Uses Mirin",      mirin);
+        fd.append("Submitter Email", email);
+        fd.append("Notes",           notes);
+        await fetch(FORMSPREE, { method:"POST", body:fd, headers:{"Accept":"application/json"} });
     } catch(e) {
         console.warn("Formspree error:", e);
     }
 
-    // 3) Clear form fields
+    // 4) Clear form
     ["newName","newAddress","newCity","newState","newNotes","newEmail"].forEach(function(id) {
         document.getElementById(id).value = "";
     });
     document.getElementById("newStyle").value = "Unknown";
     document.getElementById("newMirin").value = "Unknown";
 
-    // 4) Show success banner
-    var banner = document.getElementById("submitBanner");
-    banner.style.display = "block";
-    setTimeout(function() { banner.style.display = "none"; }, 6000);
+    showBanner("submitBanner", 6000);
 }
 
-/* ════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    DYNAMIC FILTERS
-════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 function filterTable() {
     var city  = document.getElementById("filterCity").value.toLowerCase();
     var state = document.getElementById("filterState").value.toUpperCase();
@@ -854,8 +777,8 @@ function filterTable() {
         var mirinCell = row.cells[5].innerText.trim();
 
         var show = true;
-        if (city  && cityCell.indexOf(city) === -1) show = false;
-        if (state && stateCell !== state)            show = false;
+        if (city  && cityCell.indexOf(city) === -1)   show = false;
+        if (state && stateCell.indexOf(state) === -1) show = false;
         if (mirin && mirinCell !== mirin)            show = false;
         if (style && styleCell !== style)            show = false;
 
@@ -871,16 +794,4 @@ function clearFilters() {
     filterTable();
 }
 
-/* ════════════════════════════════════════════
-   ON LOAD
-════════════════════════════════════════════ */
-document.addEventListener("DOMContentLoaded", function() {
-    applyMapsLinks();
-    document.querySelectorAll("#restaurantBody tr").forEach(function(row) {
-        applyMirinClass(row);
-    });
-});
-</script>
-
-</body>
-</html>
+/* ══════════════════════════════════ 
