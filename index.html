@@ -165,6 +165,18 @@
         <button class="clear-btn" onclick="clearFilters()">Clear</button>
     </div>
 
+<!-- Legend -->
+<div style="display:flex; flex-wrap:wrap; justify-content:center; gap:18px; margin:20px 0 5px;">
+    <div style="display:flex; align-items:center; gap:8px;">
+        <span style="display:inline-block; width:18px; height:18px; background:#e8ffe8; border:1px solid #aaa; border-radius:3px; flex-shrink:0;"></span>
+        <span style="font-size:0.9rem; color:#2c7a2c;"><strong>Green</strong> — Sushi rice is <strong>Mirin/Alcohol-free</strong></span>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+        <span style="display:inline-block; width:18px; height:18px; background:#ffe0e0; border:1px solid #aaa; border-radius:3px; flex-shrink:0;"></span>
+        <span style="font-size:0.9rem; color:#b00000;"><strong>Red</strong> — Sushi rice <strong>contains Mirin/Alcohol</strong></span>
+    </div>
+</div>
+   
     <div class="table-wrapper">
         <div id="loadingMsg"><span>⏳ Loading restaurants…</span></div>
         <table id="restaurantTable" style="display:none;">
