@@ -1,0 +1,333 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zeta - Formula Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1117; --surface: #181c27; --surface2: #1e2333;
+    --border: #2a3050; --accent: #00e5a0; --warn: #ff6b35;
+    --text: #dde3f5; --muted: #6b7599; --green-cell: #143326;
+    --green-cell-border: #00e5a0; --error-bg: #3a1515;
+    --error-text: #ff6b6b; --header-bg: #141828;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; min-height: 100vh; padding: 24px 16px; }
+  header { display: flex; align-items: flex-end; gap: 16px; margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+  header .logo { font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 600; color: var(--accent); letter-spacing: -1px; }
+  header .subtitle { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.05em; padding-bottom: 4px; }
+  .stats-bar { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 18px; min-width: 160px; flex: 1; }
+  .stat-card .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-bottom: 6px; }
+  .stat-card .value { font-size: 22px; font-family: 'IBM Plex Mono', monospace; font-weight: 600; color: var(--accent); }
+  .legend { display: flex; align-items: center; gap: 20px; margin-bottom: 16px; font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+  .legend-dot.green { background: var(--accent); opacity: 0.7; }
+  .legend-dot.calc { background: var(--surface2); border: 1px solid var(--border); }
+  .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+  table { border-collapse: collapse; width: 100%; font-family: 'IBM Plex Mono', monospace; font-size: 13px; }
+  thead tr { background: var(--header-bg); }
+  thead tr { background: var(--header-bg); }
+  thead th { position: sticky; top: 0; background: var(--header-bg); z-index: 3; }
+  th { padding: 10px 14px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 500; border-bottom: 1px solid var(--border); white-space: normal; text-align: left; max-width: 80px; cursor: pointer; user-select: none; }
+  th:hover { color: var(--text); }
+  th .sort-arrow { margin-left: 4px; opacity: 0.4; font-style: normal; }
+  th.sort-active .sort-arrow { opacity: 1; color: var(--accent); }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.025); }
+  td { padding: 7px 14px; vertical-align: middle; white-space: nowrap; }
+  td.col-a, td.col-a-repeat { font-size: 11px; font-weight: 700; }
+  td.col-a { position: sticky; left: 0; background: var(--bg); z-index: 1; box-shadow: 2px 0 6px rgba(0,0,0,0.4); }
+  th.col-a-header { position: sticky; left: 0; top: 0; background: var(--header-bg); z-index: 4; box-shadow: 2px 0 6px rgba(0,0,0,0.4); }
+  td.col-b { font-weight: 600; text-align: right; min-width: 60px; }
+  td.col-b .calc-value { display: inline-block; padding: 3px 8px; border-radius: 4px; background: var(--surface2); border: 1px solid var(--border); min-width: 50px; text-align: right; }
+  td.col-b .calc-value.is-error { background: var(--error-bg); border-color: var(--warn); color: var(--error-text); }
+  td.col-c { text-align: center; }
+  td.col-c input { background: var(--green-cell); border: 1.5px solid var(--green-cell-border); color: var(--accent); font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; width: 80px; padding: 4px 8px; border-radius: 5px; text-align: right; outline: none; transition: box-shadow 0.15s, border-color 0.15s; }
+  td.col-c input:focus { box-shadow: 0 0 0 2px rgba(0,229,160,0.25); border-color: var(--accent); }
+  td.col-c input::placeholder { color: rgba(0,229,160,0.25); }
+  td.col-c input::-webkit-inner-spin-button, td.col-c input::-webkit-outer-spin-button { opacity: 0.4; }
+  td.col-f { text-align: right; color: #4a526d; }
+  td.col-d { font-size: 11px; color: #00E5A0; font-weight: 700; }
+  td.col-e { font-size: 11px; color: #FF4444; font-weight: 700; }
+  td.col-g { text-align: right; color: var(--text); font-weight: 600; }
+  .col-c-header { color: var(--accent); }
+  .pulse { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-left: 5px; animation: pulse 2s infinite; vertical-align: middle; }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.7); } }
+  .flash { animation: flash 0.3s ease; }
+  @keyframes flash { 0% { background: rgba(0,229,160,0.2); } 100% { background: transparent; } }
+  .footer-note { margin-top: 16px; font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; text-align: center; }
+  .btn-bar { display: flex; justify-content: center; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+  .btn { font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 6px 18px; border-radius: 5px; cursor: pointer; border: 1px solid; transition: background 0.15s; }
+  .btn-reset  { background: #3a1515; border-color: #ff6b35; color: #ff6b35; }
+  .btn-reset:hover  { background: #5a2020; }
+  .btn-sort   { background: #0d2a1f; border-color: var(--accent); color: var(--accent); }
+  .btn-sort:hover   { background: #143326; }
+  .btn-unsort { background: #1a1a2e; border-color: #6b7599; color: #6b7599; }
+  .btn-unsort:hover { background: #22223a; }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">ZETA</div>
+  <div class="subtitle">Formula Tracker &middot; Dynamic Allocation Engine</div>
+</header>
+<div class="stats-bar">
+  <div class="stat-card">
+    <div class="label">Tracking (Max F)</div>
+    <div class="value" id="stat-budget">-</div>
+  </div>
+</div>
+<div class="legend">
+  <div class="legend-item"><span class="legend-dot green"></span> Editable (Col C)</div>
+  <div class="legend-item"><span class="legend-dot calc"></span> Calculated (Col B)</div>
+</div>
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th class="col-a-header" data-sort="a">Col A <span class="sort-arrow">&#x21C5;</span></th>
+        <th class="col-c-header" style="text-align:center">Transaction <span class="pulse"></span><br><span style="font-size:9px;color:var(--muted)">enter amount</span></th>
+        <th style="text-align:right" data-sort="b">Available <span class="sort-arrow">&#x21C5;</span></th>
+        <th style="text-align:right">Col F</th>
+        <th data-sort="d">Closing Date <span class="sort-arrow">&#x21C5;</span></th>
+        <th data-sort="e">Closing Date <span class="sort-arrow">&#x21C5;</span></th>
+        <th style="text-align:right" data-sort="g">Maximum Available <span class="sort-arrow">&#x21C5;</span></th>
+        <th data-sort="a">Col A <span class="sort-arrow">&#x21C5;</span></th>
+      </tr>
+    </thead>
+    <tbody id="table-body"></tbody>
+  </table>
+</div>
+<div class="btn-bar">
+  <button class="btn btn-sort" onclick="showSortPanel()">&#x21C5; Sort</button>
+  <button class="btn btn-unsort" onclick="resetSort()">&#x21BA; Original Order</button>
+  <button class="btn btn-reset" onclick="resetAll()">&#x21BA; Reset All Data</button>
+</div>
+<div id="sort-panel" style="display:none;margin-top:10px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 20px;max-width:380px;margin-left:auto;margin-right:auto;font-family:'IBM Plex Mono',monospace;font-size:12px;">
+  <div style="color:var(--muted);margin-bottom:10px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;">Sort by column</div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;">
+    <button class="btn btn-sort" style="font-size:10px;padding:4px 12px;" onclick="applySort('a')">Col A</button>
+    <button class="btn btn-sort" style="font-size:10px;padding:4px 12px;" onclick="applySort('b')">Available</button>
+    <button class="btn btn-sort" style="font-size:10px;padding:4px 12px;" onclick="applySort('d')">Closing Date</button>
+    <button class="btn btn-sort" style="font-size:10px;padding:4px 12px;" onclick="applySort('e')">Closing Date</button>
+    <button class="btn btn-sort" style="font-size:10px;padding:4px 12px;" onclick="applySort('g')">Maximum Available</button>
+  </div>
+  <div style="margin-top:10px;display:flex;align-items:center;gap:10px;">
+    <label style="color:var(--muted);"><input type="radio" name="sortDir" value="asc"> Asc</label>
+    <label style="color:var(--muted);"><input type="radio" name="sortDir" value="desc" checked> Desc</label>
+  </div>
+</div>
+<div class="footer-note" style="margin-top:8px;">Enter a value in any green cell &rarr; press Enter or click away &rarr; tracking decrements &amp; all green cells reset &middot; Data is saved automatically</div>
+<script>
+  const rows = [
+    { a: 'CHASE', c: 0, f: 0, g: 200, d: null, e: null, origIdx: 0 },
+    { a: 'PayPal', c: 0, f: 0, g: 9560, d: '2026-07-10', e: '2026-08-02', origIdx: 1 },
+    { a: 'PenFed', c: 0, f: 270, g: 1090, d: '2026-07-18', e: '2026-08-15', origIdx: 2 },
+    { a: 'Apple', c: 0, f: 10, g: 10, d: '2026-07-31', e: '2026-09-01', origIdx: 3 },
+    { a: 'BJs', c: 0, f: 640, g: 3270, d: '2026-08-03', e: '2026-08-28', origIdx: 4 },
+    { a: 'Amazon', c: 0, f: 270, g: 4280, d: '2026-07-21', e: '2026-08-15', origIdx: 5 },
+    { a: 'SamC', c: 0, f: 640, g: 650, d: '2026-08-05', e: '2026-08-28', origIdx: 6 },
+    { a: '', c: 0, f: 0, g: 0, d: null, e: null, origIdx: 7 },
+    { a: 'AMEX_1006', c: 0, f: 640, g: 24000, d: '2026-08-03', e: '2026-08-28', origIdx: 8 },
+    { a: 'Sunbit', c: 0, f: 640, g: 6590, d: '2026-08-02', e: '2026-08-28', origIdx: 9 },
+    { a: 'Chase_Feedom', c: 0, f: 640, g: 3620, d: '2026-08-03', e: '2026-08-28', origIdx: 10 },
+    { a: 'Prosper_9848', c: 0, f: 640, g: 2490, d: '2026-08-03', e: '2026-08-28', origIdx: 11 },
+    { a: 'Mission_3736', c: 0, f: 640, g: 1270, d: '2026-07-28', e: '2026-08-24', origIdx: 12 },
+    { a: 'AMEX_1007', c: 0, f: 640, g: 6000, d: '2026-07-26', e: '2026-08-20', origIdx: 13 },
+    { a: 'Chase_Door_Dash', c: 0, f: 600, g: 600, d: '2026-07-25', e: '2026-08-22', origIdx: 14 },
+    { a: 'Academy', c: 0, f: 270, g: 1790, d: '2026-07-12', e: '2026-08-07', origIdx: 15 },
+    { a: 'eBay', c: 0, f: 70, g: 70, d: '2026-07-22', e: '2026-08-14', origIdx: 16 },
+    { a: 'Macys', c: 0, f: 60, g: 60, d: '2026-07-12', e: '2026-08-08', origIdx: 17 },
+    { a: 'CITI_0372', c: 0, f: 270, g: 290, d: '2026-07-19', e: '2026-08-16', origIdx: 18 },
+    { a: 'CITI_2026', c: 0, f: 20, g: 20, d: '2026-08-01', e: '2026-09-01', origIdx: 19 },
+    { a: 'CITI_4631', c: 0, f: 40, g: 40, d: '2026-07-28', e: '2026-08-24', origIdx: 20 },
+    { a: 'Credit_One_1169', c: 0, f: 700, g: 2000, d: '2026-08-08', e: '2026-09-04', origIdx: 21 },
+    { a: 'Mission_1297', c: 0, f: 640, g: 3400, d: '2026-07-24', e: '2026-08-27', origIdx: 22 },
+    { a: 'Mission_2077', c: 0, f: 640, g: 3000, d: '2026-07-23', e: '2026-08-21', origIdx: 23 },
+    { a: 'Prosper_9968', c: 0, f: 550, g: 550, d: '2026-08-03', e: '2026-08-28', origIdx: 24 },
+    { a: 'Embark', c: 0, f: 270, g: 580, d: '2026-07-15', e: '2026-08-12', origIdx: 25 },
+    { a: 'TD_Bank', c: 0, f: 270, g: 3500, d: '2026-07-10', e: '2026-08-07', origIdx: 26 }
+  ];
+  const TOTAL_ROWS = rows.length;
+  const LAST7_ORIG = new Set(Array.from({length: Math.min(7, TOTAL_ROWS)}, (_, k) => TOTAL_ROWS - 1 - k));
+  const BASE_BUDGET = Math.max(...rows.map(r => r.f));
+  const DATA_SIG = rows.length + '_' + Math.max(...rows.map(r=>r.f)) + '_' + rows.map(r=>r.f).join(',');
+  const STORAGE_KEY = 'zeta_spent_' + DATA_SIG;
+  function loadSpent() {
+    try { const s = localStorage.getItem(STORAGE_KEY); if (s) { const p = JSON.parse(s); if (Array.isArray(p) && p.length === rows.length) return p; } } catch(e) {}
+    return new Array(rows.length).fill(0);
+  }
+  function saveSpent() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(spent)); } catch(e) {} }
+  const spent = loadSpent();
+  const META_KEY = 'zeta_meta_' + DATA_SIG;
+  function loadMetaSpent() {
+    try { const s = localStorage.getItem(META_KEY); if (s) { const p = JSON.parse(s); if (Array.isArray(p) && p.length === rows.length) return p; } } catch(e) {}
+    return new Array(rows.length).fill(0);
+  }
+  function saveMetaSpent() { try { localStorage.setItem(META_KEY, JSON.stringify(metaSpent)); } catch(e) {} }
+  const metaSpent = loadMetaSpent();
+  // Sort state
+  let sortCol = null; let sortAsc = true;
+  let displayOrder = rows.map((_, i) => i); // indices into rows[]
+  function getMetaBalance(idx) { return rows[idx].g - metaSpent[idx]; }
+  function getGlobalRemaining() {
+    let used = 0;
+    for (let i = 0; i < rows.length; i++) used += spent[i] + rows[i].c;
+    return BASE_BUDGET - used;
+  }
+  function getTierRemaining(row) {
+    let used = 0;
+    for (let i = 0; i < rows.length; i++) { if (rows[i].f <= row.f) used += spent[i] + rows[i].c; }
+    return row.f - used;
+  }
+  function calcB(rowIdx) {
+    const row = rows[rowIdx];
+    const result = Math.min(getTierRemaining(row), getGlobalRemaining());
+    if (result < 0) return 'Error';
+    return result;
+  }
+  function fmtDate(str) {
+    if (!str) return '-';
+    const d = new Date(str);
+    return d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'2-digit' });
+  }
+  function fmtNum(n) {
+    if (typeof n === 'string') return n;
+    return n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+  }
+  // Returns true if origIdx is one of the last 7 original rows
+  function isLast7(origIdx) { return LAST7_ORIG.has(origIdx); }
+  function colAColor(row) {
+    if (isLast7(row.origIdx)) return '#FF4444';
+    if (row.a === '2026' || row.a === '4631') return '#00FFFF';
+    return '#FFD700';
+  }
+  function buildTable() {
+    const tbody = document.getElementById('table-body');
+    tbody.innerHTML = '';
+    displayOrder.forEach((i) => {
+      const row = rows[i];
+      const tr = document.createElement('tr');
+      const bVal = calcB(i);
+      const isError = bVal === 'Error';
+      const aColor = colAColor(row);
+      tr.innerHTML = `
+        <td class="col-a" style="color:${aColor}">${row.a}</td>
+        <td class="col-c"><input type="number" min="0" value="${row.c === 0 ? '' : row.c}" placeholder="0" data-idx="${i}" step="1" /></td>
+        <td class="col-b"><span class="calc-value${isError ? ' is-error' : ''}" id="b-${i}">${isError ? '&#9888; Error' : fmtNum(bVal)}</span></td>
+        <td class="col-f">${fmtNum(row.f)}</td>
+        <td class="col-d">${fmtDate(row.d)}</td>
+        <td class="col-e">${fmtDate(row.e)}</td>
+        <td class="col-g" id="g-${i}">${fmtNum(getMetaBalance(i))}</td>
+        <td class="col-a-repeat" style="color:${aColor}">${row.a}</td>`;
+      tbody.appendChild(tr);
+    });
+    tbody.querySelectorAll('input[data-idx]').forEach(inp => {
+      inp.addEventListener('input', handleInput);
+      inp.addEventListener('change', handleCommit);
+      inp.addEventListener('keydown', e => { if (e.key === 'Enter') e.target.blur(); });
+    });
+    updateStats();
+  }
+  function handleInput(e) {
+    const idx = parseInt(e.target.dataset.idx);
+    const val = parseFloat(e.target.value) || 0;
+    const effectiveF = rows[idx].f - spent[idx];
+    rows[idx].c = Math.min(val >= 0 ? val : 0, effectiveF);
+    recalcAll();
+  }
+  function handleCommit(e) {
+    const idx = parseInt(e.target.dataset.idx);
+    const val = parseFloat(e.target.value) || 0;
+    if (val <= 0) return;
+    spent[idx] += val;
+    metaSpent[idx] += val;
+    saveSpent(); saveMetaSpent();
+    rows.forEach(r => { r.c = 0; });
+    document.querySelectorAll('input[data-idx]').forEach(inp => { inp.value = ''; });
+    recalcAll();
+  }
+  function recalcAll() {
+    rows.forEach((_, i) => {
+      const el = document.getElementById('b-' + i);
+      if (!el) return;
+      const bVal = calcB(i);
+      const isError = bVal === 'Error';
+      el.textContent = isError ? '\u26A0 Error' : fmtNum(bVal);
+      el.className = 'calc-value' + (isError ? ' is-error' : '');
+      el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+      const gEl = document.getElementById('g-' + i);
+      if (gEl) { const bal = getMetaBalance(i); gEl.textContent = fmtNum(bal); gEl.style.color = bal < 0 ? 'var(--error-text)' : ''; }
+    });
+    updateStats();
+  }
+  function updateStats() {
+    document.getElementById('stat-budget').textContent = fmtNum(getGlobalRemaining());
+  }
+  // ---- Sort logic ----
+  function showSortPanel() {
+    const p = document.getElementById('sort-panel');
+    p.style.display = p.style.display === 'none' ? 'block' : 'none';
+  }
+  // Col A defaults Asc; all other columns default Desc
+  function getDefaultDir(col) { return col === 'a'; }
+  function applySort(col) {
+    sortAsc = getDefaultDir(col);
+    sortCol = col;
+    document.querySelectorAll('input[name="sortDir"]').forEach(r => { r.checked = (r.value === (sortAsc ? 'asc' : 'desc')); });
+    displayOrder = [...Array(rows.length).keys()];
+    displayOrder.sort((a, b) => {
+      let va, vb;
+      if (col === 'a') { va = rows[a].a; vb = rows[b].a; }
+      else if (col === 'b') { va = calcB(a); vb = calcB(b); va = va === 'Error' ? -Infinity : va; vb = vb === 'Error' ? -Infinity : vb; }
+      else if (col === 'd') { va = rows[a].d || ''; vb = rows[b].d || ''; }
+      else if (col === 'e') { va = rows[a].e || ''; vb = rows[b].e || ''; }
+      else if (col === 'g') { va = getMetaBalance(a); vb = getMetaBalance(b); }
+      if (va < vb) return sortAsc ? -1 : 1;
+      if (va > vb) return sortAsc ? 1 : -1;
+      return 0;
+    });
+    buildTable();
+    document.getElementById('sort-panel').style.display = 'none';
+    updateSortArrows();
+  }
+  function resetSort() {
+    sortCol = null; sortAsc = true;
+    displayOrder = rows.map((_, i) => i);
+    buildTable();
+    updateSortArrows();
+  }
+  function updateSortArrows() {
+    document.querySelectorAll('th[data-sort]').forEach(th => {
+      th.classList.remove('sort-active');
+      const arrow = th.querySelector('.sort-arrow');
+      if (arrow) arrow.innerHTML = '&#x21C5;';
+    });
+    if (sortCol) {
+      document.querySelectorAll('th[data-sort="' + sortCol + '"]').forEach(th => {
+        th.classList.add('sort-active');
+        const arrow = th.querySelector('.sort-arrow');
+        if (arrow) arrow.innerHTML = sortAsc ? '&#x2191;' : '&#x2193;';
+      });
+    }
+  }
+  document.querySelectorAll('th[data-sort]').forEach(th => {
+    th.addEventListener('click', () => applySort(th.dataset.sort));
+  });
+  function resetAll() {
+    if (!confirm('Reset all data and restore original tracking?')) return;
+    spent.fill(0); saveSpent();
+    metaSpent.fill(0); saveMetaSpent();
+    rows.forEach(r => { r.c = 0; });
+    document.querySelectorAll('input[data-idx]').forEach(inp => { inp.value = ''; });
+    recalcAll();
+  }
+  buildTable();
+</script>
+</body>
+</html>
