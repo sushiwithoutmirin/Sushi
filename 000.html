@@ -78,12 +78,12 @@
     <div style="font-size:10px;color:#6b7599;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:28px;">Enter Password</div>
     <input id="pw-input" type="password" inputmode="numeric" pattern="[0-9]*" placeholder="••••••••"
       style="width:100%;background:#0f1117;border:1.5px solid #2a3050;color:#dde3f5;font-family:'IBM Plex Mono',monospace;font-size:16px;padding:10px 14px;border-radius:6px;outline:none;text-align:center;letter-spacing:0.2em;margin-bottom:14px;"
-      oninput="checkPW()" autofocus />
+      onkeydown="if(event.key==='Enter') checkPW()" autofocus />
   </div>
 </div>
 <script>
   async function checkPW() {
-    const input = document.getElementById('pw-input').value;
+    const input = document.getElementById('pw-input').value.trim();
     if (!input) return;
     
     // Compute SHA-256 hash of the input
@@ -92,8 +92,11 @@
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     
-    if (hashHex === '88d052601977759868be54881023758b2ff28f3a3f5b083d8eb53e7f6735e5d1') {
+    if (hashHex === '7878601662588e7b998246a47a164ff89659b9aa52f6f47700dfa486510da816') {
       document.getElementById('pw-overlay').style.display = 'none';
+    } else {
+      alert('Incorrect password');
+      document.getElementById('pw-input').value = '';
     }
   }
 </script>
