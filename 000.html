@@ -100,7 +100,7 @@
     <div class="label">Tracking (Max F)</div>
     <div class="value-container">
       <div class="value" id="stat-budget">-</div>
-      <div class="timestamp">GitHub Uploaded: 2026-07-10 01:22:33 AM</div>
+      <div class="timestamp">GitHub Uploaded: 2026-07-10 01:30:53 AM</div>
     </div>
   </div>
 </div>
@@ -222,10 +222,10 @@
     if (typeof n === 'string') return n;
     return n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
   }
-  function isLast7(origIdx) { return LAST7_ORIG.has(origIdx); }
   function colAColor(row) {
-    if (isLast6(row.origIdx)) return '#FF4444';
-    if (row.a === 'CITI_0372' || row.a === 'CITI_2026' || row.a === 'CITI_4631') return '#00FFFF';
+    const idx = row.origIdx;
+    if (idx >= TOTAL_ROWS - 6) return '#FF4444';
+    if (idx >= TOTAL_ROWS - 9 && idx < TOTAL_ROWS - 6) return '#00FFFF';
     return '#FFD700';
   }
   function buildTable() {
