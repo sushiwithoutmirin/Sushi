@@ -52,6 +52,7 @@
   td.col-c input:focus { box-shadow: 0 0 0 2px rgba(0,229,160,0.25); border-color: var(--accent); }
   td.col-c input::placeholder { color: rgba(0,229,160,0.25); }
   td.col-c input::-webkit-inner-spin-button, td.col-c input::-webkit-outer-spin-button { opacity: 0.4; }
+  td.col-c input.input-error { background: var(--error-bg) !important; border-color: var(--warn) !important; color: var(--error-text) !important; box-shadow: 0 0 0 2px rgba(255,107,53,0.35) !important; }
   td.col-f { text-align: right; color: #4a526d; }
   td.col-d { font-size: 11px; color: #00E5A0; font-weight: 700; }
   td.col-e { font-size: 11px; color: #FF4444; font-weight: 700; }
@@ -100,7 +101,7 @@
     <div class="label">Tracking (Max F)</div>
     <div class="value-container">
       <div class="value" id="stat-budget">-</div>
-      <div class="timestamp">GitHub Uploaded: 2026-07-10 03:46:08 PM</div>
+      <div class="timestamp">GitHub Uploaded: 2026-07-10 03:47:13 PM</div>
     </div>
   </div>
 </div>
@@ -213,6 +214,13 @@
     if (result < 0) return 0;
     return result;
   }
+  function calcAvailBeforeInput(rowIdx) {
+    const individualRemaining = rows[rowIdx].f - spent[rowIdx];
+    let used = 0;
+    for (let i = 0; i < rows.length; i++) used += spent[i] + (i === rowIdx ? 0 : rows[i].c);
+    const globalRemaining = BASE_BUDGET - used;
+    return Math.max(0, Math.min(individualRemaining, globalRemaining));
+  }
   function fmtDate(str) {
     if (!str) return '-';
     const d = new Date(str);
@@ -259,19 +267,27 @@
   function handleInput(e) {
     const idx = parseInt(e.target.dataset.idx);
     const val = parseFloat(e.target.value) || 0;
-    const effectiveF = rows[idx].f - spent[idx];
-    rows[idx].c = Math.min(val >= 0 ? val : 0, effectiveF);
+    const avail = calcAvailBeforeInput(idx);
+    rows[idx].c = val >= 0 ? val : 0;
+    e.target.classList.toggle('input-error', val > avail);
     recalcAll();
   }
   function handleCommit(e) {
     const idx = parseInt(e.target.dataset.idx);
     const val = parseFloat(e.target.value) || 0;
+    const avail = calcAvailBeforeInput(idx);
+    if (val > avail) {
+      e.target.classList.add('input-error');
+      alert('Transaction of ' + fmtNum(val) + ' exceeds the available amount of ' + fmtNum(avail) + ' for this card.');
+      return;
+    }
     if (val <= 0) return;
+    e.target.classList.remove('input-error');
     spent[idx] += val;
     metaSpent[idx] += val;
     saveSpent(); saveMetaSpent();
     rows.forEach(r => { r.c = 0; });
-    document.querySelectorAll('input[data-idx]').forEach(inp => { inp.value = ''; });
+    document.querySelectorAll('input[data-idx]').forEach(inp => { inp.value = ''; inp.classList.remove('input-error'); });
     recalcAll();
   }
   function recalcAll() {
